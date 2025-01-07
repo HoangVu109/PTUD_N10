@@ -1,6 +1,5 @@
-# Bài tập lớn môn Phát triển ứng dụng 
-Tên ứng dụng: XÂY DỰNG ỨNG DỤNG BÁN VÉ TÀU TẠI NHÀ GA.
-Nhóm 10 - DHKHMT18A
+# Xây dựng ứng dụng bán vé tàu tại nhà ga  
+Lớp Phát triển ứng dụng DHKHMT18A - Nhóm 10
 -  Vũ Việt Hoàng (NT)
 -  Võ Trần Gia Huy
 -  Nguyễn Gia Huy

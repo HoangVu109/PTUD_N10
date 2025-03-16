@@ -8,6 +8,6 @@ import javax.swing.*;
 public class BanVeGaSG {
     public static void main(String[] args) {
         DatabaseConnection db = new DatabaseConnection();
-        GaSaiGonUI.main(null);
+        new GaSaiGonUI();
     }
 }

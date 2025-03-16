@@ -9,17 +9,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
 
 public class GaSaiGonUI extends JFrame {
     private JPanel mainArea; // Lưu trữ mainArea để cập nhật nội dung
 
     public GaSaiGonUI() {
+
+        Connection dbConnection = DatabaseConnection.getConnection();
+        if (dbConnection == null) {
+            JOptionPane.showMessageDialog(this, "Không thể kết nối cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            System.exit(1); // Thoát nếu không kết nối được
+        }
         // Thiết lập cửa sổ chính
         setTitle("GA SÀI GÒN - HỆ THỐNG QUẢN LÝ BÁN VÉ TÀU HỎA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200, 750);
         // Tắt thanh title bar mặc định
-
 
 
         // Tạo layout chính
@@ -226,14 +232,8 @@ public class GaSaiGonUI extends JFrame {
         mainArea.repaint();
     }
 
-    public static void main(String[] args) {
-
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GaSaiGonUI();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        new GaSaiGonUI();
+//    }
+//}
 }

@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-class GaSaiGonUI extends JFrame {
+public class GaSaiGonUI extends JFrame {
     private JPanel mainArea; // Lưu trữ mainArea để cập nhật nội dung
 
     public GaSaiGonUI() {
@@ -228,7 +228,6 @@ class GaSaiGonUI extends JFrame {
 
     public static void main(String[] args) {
 
-        // Chạy ứng dụng trên Event Dispatch Thread
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override

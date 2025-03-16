@@ -26,7 +26,7 @@ public class NhanVienController {
         fullData = nhanVienList.toArray(new String[0][]);
         danhsachgoc.clear();
         for (int i = 0; i < fullData.length; i++) {
-            danhsachgoc.add(i);
+            danhsachgoc.add(Integer.valueOf(i));
         }
         updateTableData(fullData);
     }
@@ -34,8 +34,7 @@ public class NhanVienController {
     // Cập nhật dữ liệu vào JTable trong View
     private void updateTableData(String[][] data) {
         view.getTableModel().setRowCount(0);
-        for (int i = 0; i < data.length; i++) {
-            String[] row = data[i];
+        for (String[] row : data) {
             Object[] displayRow = new Object[4];
             displayRow[0] = row[0]; // Mã nhân viên
             displayRow[1] = row[1]; // Họ tên
@@ -62,7 +61,7 @@ public class NhanVienController {
             }
             if (match) {
                 filteredData.add(row);
-                danhsachgoc.add(i);
+                danhsachgoc.add(Integer.valueOf(i));
             }
         }
 
@@ -72,7 +71,7 @@ public class NhanVienController {
             updateTableData(fullData);
             danhsachgoc.clear();
             for (int i = 0; i < fullData.length; i++) {
-                danhsachgoc.add(i);
+                danhsachgoc.add(Integer.valueOf(i));
             }
         } else {
             updateTableData(filteredData.toArray(new String[0][]));

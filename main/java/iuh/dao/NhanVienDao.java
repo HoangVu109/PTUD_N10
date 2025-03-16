@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhanVienDao {
-    private Connection connection;
+public class NhanVienDao extends Dao{
+    private final Connection connection;
 
     public NhanVienDao() {
         connection = DatabaseConnection.getConnection();

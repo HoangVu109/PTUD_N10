@@ -10,8 +10,8 @@ import java.util.List;
 public class NhanVienController {
     private QuanLyNhanVienScreen view;
     private NhanVienDao model;
-    private String[][] fullData; // Lưu toàn bộ dữ liệu
-    private List<Integer> danhsachgoc; // Lưu chỉ số gốc của các hàng hiển thị
+    private String[][] fullData;
+    private List<Integer> danhsachgoc;
 
     public NhanVienController(QuanLyNhanVienScreen view) {
         this.view = view;
@@ -20,26 +20,26 @@ public class NhanVienController {
         loadInitialData();
     }
 
-    // Tải dữ liệu ban đầu từ Model
     private void loadInitialData() {
         List<String[]> nhanVienList = model.getAllNhanVien();
         fullData = nhanVienList.toArray(new String[0][]);
         danhsachgoc.clear();
         for (int i = 0; i < fullData.length; i++) {
-            danhsachgoc.add(Integer.valueOf(i));
+            danhsachgoc.add(i);
         }
         updateTableData(fullData);
     }
 
-    // Cập nhật dữ liệu vào JTable trong View
+    // Cập nhật dữ liệu cho JTable
     private void updateTableData(String[][] data) {
         view.getTableModel().setRowCount(0);
-        for (String[] row : data) {
+        for (int i = 0; i < data.length; i++) {
+            String[] row = data[i];
             Object[] displayRow = new Object[4];
-            displayRow[0] = row[0]; // Mã nhân viên
-            displayRow[1] = row[1]; // Họ tên
-            displayRow[2] = row[2]; // Chức vụ
-            displayRow[3] = row[3]; // Giới tính
+            displayRow[0] = row[0]; // maSoNV
+            displayRow[1] = row[1]; // hoTenNV
+            displayRow[2] = row[2].equals("0") ? "Quản lý" : "Nhân viên"; // chucVu: 0 = Quản lý, 1 = Nhân viên
+            displayRow[3] = row[3].equals("0") ? "Nam" : "Nữ"; // gioiTinh: 0 = Nam, 1 = Nữ
             view.getTableModel().addRow(displayRow);
         }
     }
@@ -61,44 +61,41 @@ public class NhanVienController {
             }
             if (match) {
                 filteredData.add(row);
-                danhsachgoc.add(Integer.valueOf(i));
+                danhsachgoc.add(i);
             }
         }
 
         if (filteredData.isEmpty()) {
             JOptionPane.showMessageDialog(view.getPanel(), "Không tìm thấy nhân viên!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            // Khôi phục danh sách ban đầu
             updateTableData(fullData);
             danhsachgoc.clear();
             for (int i = 0; i < fullData.length; i++) {
-                danhsachgoc.add(Integer.valueOf(i));
+                danhsachgoc.add(i);
             }
         } else {
             updateTableData(filteredData.toArray(new String[0][]));
         }
     }
 
-    // Cập nhật thông tin nhân viên khi chọn từ JTable
+    // Cập nhật thông tin cho employeePanel
     public void updateEmployeeInfo(int selectedRow) {
         if (selectedRow != -1 && selectedRow < danhsachgoc.size()) {
             int originalIndex = danhsachgoc.get(selectedRow);
-            String maNV = fullData[originalIndex][0];
-            String hoTen = fullData[originalIndex][1];
-            String chucVu = fullData[originalIndex][2];
-            String gioiTinh = fullData[originalIndex][3];
-            String cccd = fullData[originalIndex][4];
-            String ngaySinh = fullData[originalIndex][5];
-            String diaChi = fullData[originalIndex][6];
+            String maNV = fullData[originalIndex][0];      // maSoNV
+            String hoTen = fullData[originalIndex][1];     // hoTenNV
+            String chucVu = fullData[originalIndex][2].equals("0") ? "Quản lý" : "Nhân viên"; // chucVu: 0 = Quản lý, 1 = Nhân viên
+            String gioiTinh = fullData[originalIndex][3].equals("0") ? "Nam" : "Nữ";          // gioiTinh: 0 = Nam, 1 = Nữ
+            String cccd = fullData[originalIndex][4];      // soCCCD
+            String ngaySinh = fullData[originalIndex][5];  // ngaySinh
+            String diaChi = fullData[originalIndex][6];    // diaChi
             view.updateEmployeePanel(maNV, hoTen, chucVu, gioiTinh, cccd, ngaySinh, diaChi);
         }
     }
 
-    // Getter cho fullData
     public String[][] getFullData() {
         return fullData;
     }
 
-    // Getter cho danhsachgoc
     public List<Integer> getOriginalIndices() {
         return danhsachgoc;
     }

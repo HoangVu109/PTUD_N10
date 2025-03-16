@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhanVienDao extends Dao{
+public class NhanVienDao extends Dao {
     private final Connection connection;
 
     public NhanVienDao() {
@@ -24,18 +24,22 @@ public class NhanVienDao extends Dao{
             System.err.println("Connection is null in getAllNhanVien!");
             return nhanVienList;
         }
-        String sql = "SELECT MaNV, HoTen, ChucVu, GioiTinh, CCCD, NgaySinh, DiaChi FROM NhanVien";
+        // Cập nhật truy vấn để khớp với các cột trong bảng
+        String sql = "SELECT maSoNV, hoTenNV, chucVu, gioiTinh, soCCCD, ngaySinh, diaChi, soDT, matKhau FROM NhanVien";
         try (PreparedStatement stmt = connection.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                String[] nhanVien = new String[7];
-                nhanVien[0] = rs.getString("MaNV");
-                nhanVien[1] = rs.getString("HoTen");
-                nhanVien[2] = rs.getString("ChucVu");
-                nhanVien[3] = rs.getString("GioiTinh");
-                nhanVien[4] = rs.getString("CCCD");
-                nhanVien[5] = rs.getString("NgaySinh");
-                nhanVien[6] = rs.getString("DiaChi");
+                // Tạo mảng String với 9 phần tử tương ứng 9 cột
+                String[] nhanVien = new String[9];
+                nhanVien[0] = rs.getString("maSoNV");     // Mã số nhân viên
+                nhanVien[1] = rs.getString("hoTenNV");    // Họ tên nhân viên
+                nhanVien[2] = rs.getString("chucVu");     // Chức vụ (0 hoặc 1)
+                nhanVien[3] = rs.getString("gioiTinh");   // Giới tính (0 hoặc 1)
+                nhanVien[4] = rs.getString("soCCCD");     // Số CCCD
+                nhanVien[5] = rs.getString("ngaySinh");   // Ngày sinh
+                nhanVien[6] = rs.getString("diaChi");     // Địa chỉ
+                nhanVien[7] = rs.getString("soDT");       // Số điện thoại
+                nhanVien[8] = rs.getString("matKhau");    // Mật khẩu
                 nhanVienList.add(nhanVien);
             }
         } catch (SQLException e) {
@@ -44,8 +48,10 @@ public class NhanVienDao extends Dao{
         }
         return nhanVienList;
     }
+
     public boolean deleteNhanVien(String maNV) {
-        String sql = "DELETE FROM NhanVien WHERE MaNV = ?";
+        // Cập nhật tên cột MaNV thành maSoNV
+        String sql = "DELETE FROM NhanVien WHERE maSoNV = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, maNV);
             int rowsAffected = stmt.executeUpdate();
@@ -56,5 +62,3 @@ public class NhanVienDao extends Dao{
         }
     }
 }
-
-

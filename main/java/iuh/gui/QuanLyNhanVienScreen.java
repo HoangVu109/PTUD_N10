@@ -247,7 +247,7 @@ public class QuanLyNhanVienScreen {
         chucVuLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         chucVuLabel.setForeground(new Color(80, 80, 80));
         chucVuLabel.setPreferredSize(new Dimension(100, 30));
-        chucVuComboBox = new JComboBox<>(new String[]{"Quản lý", "Nhân viên"});
+        chucVuComboBox = new JComboBox<>(new String[]{"Quản lý", "Nhân viên"}); // Đảm bảo thứ tự khớp với logic (0 = Quản lý, 1 = Nhân viên)
         chucVuComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         chucVuComboBox.setPreferredSize(new Dimension(200, 30));
         chucVuComboBox.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true));
@@ -264,7 +264,7 @@ public class QuanLyNhanVienScreen {
         gioiTinhLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gioiTinhLabel.setForeground(new Color(80, 80, 80));
         gioiTinhLabel.setPreferredSize(new Dimension(100, 30));
-        gioiTinhComboBox = new JComboBox<>(new String[]{"Nam", "Nữ"});
+        gioiTinhComboBox = new JComboBox<>(new String[]{"Nam", "Nữ"}); // Đảm bảo thứ tự khớp với logic (0 = Nam, 1 = Nữ)
         gioiTinhComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gioiTinhComboBox.setPreferredSize(new Dimension(200, 30));
         gioiTinhComboBox.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true));

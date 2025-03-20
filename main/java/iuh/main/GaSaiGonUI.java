@@ -10,11 +10,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class GaSaiGonUI extends JFrame {
     private JPanel mainArea; // Lưu trữ mainArea để cập nhật nội dung
 
-    public GaSaiGonUI() {
+    public GaSaiGonUI() throws SQLException {
 
         Connection dbConnection = DatabaseConnection.getConnection();
         if (dbConnection == null) {
@@ -78,8 +79,8 @@ public class GaSaiGonUI extends JFrame {
 
         // Danh sách các chức năng
         String[] menuItems = {
-                "Home", "Quản lý nhân viên", "Quản lý chuyến tàu", "Quản lý tuyến tàu",
-                "Quản lý tàu", "Quản lý khách hàng", "Tra cứu thông tin", "Thống kê", "My account"
+                "Trang chủ", "Quản lý nhân viên", "Quản lý chuyến tàu", "Quản lý tuyến tàu",
+                "Quản lý tàu", "Quản lý khách hàng", "Tra cứu thông tin", "Thống kê", "Tài khoản"
         };
         String[] iconPaths = {
                 "main/java/iuh/icons/home.png", "main/java/iuh/icons/quanlynhanvien.png", "main/java/iuh/icons/quanlychuyentau.png", "main/java/iuh/icons/quanlytuyentau.png",
@@ -133,7 +134,7 @@ public class GaSaiGonUI extends JFrame {
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (text.equals("Home")) {
+                if (text.equals("Trang chủ")) {
                     updateMainArea(new HomeScreen().getPanel());
                 } else if (text.equals("Quản lý nhân viên")) {
                     updateMainArea(new QuanLyNhanVienScreen().getPanel());
@@ -232,8 +233,7 @@ public class GaSaiGonUI extends JFrame {
         mainArea.repaint();
     }
 
-//    public static void main(String[] args) {
-//        new GaSaiGonUI();
-//    }
-//}
+    public static void main(String[] args) throws SQLException {
+        new GaSaiGonUI();
+    }
 }

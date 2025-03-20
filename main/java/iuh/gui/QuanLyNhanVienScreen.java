@@ -334,7 +334,7 @@ public class QuanLyNhanVienScreen {
         toolsPanel.setBackground(new Color(240, 240, 240));
         toolsPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        JButton addButton = new JButton("ADD");
+        JButton addButton = new JButton("Thêm mới");
         addButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         addButton.setBackground(new Color(0, 120, 215));
         addButton.setForeground(Color.WHITE);
@@ -342,7 +342,7 @@ public class QuanLyNhanVienScreen {
         addButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Chức năng ADD sẽ được triển khai!"));
         toolsPanel.add(addButton);
 
-        JButton editButton = new JButton("EDIT");
+        JButton editButton = new JButton("Sửa");
         editButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         editButton.setBackground(new Color(0, 153, 0));
         editButton.setForeground(Color.WHITE);
@@ -350,7 +350,7 @@ public class QuanLyNhanVienScreen {
         editButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Chức năng EDIT sẽ được triển khai!"));
         toolsPanel.add(editButton);
 
-        JButton deleteButton = new JButton("DELETE");
+        JButton deleteButton = new JButton("Xoá");
         deleteButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         deleteButton.setBackground(new Color(255, 102, 102));
         deleteButton.setForeground(Color.WHITE);

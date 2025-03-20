@@ -12,6 +12,7 @@ public class NhanVien {
     // Constructors không có gì
     public NhanVien() {
     }
+    //Constructors day du
     public NhanVien(String maNV, String hoTen, String chucVu, String gioiTinh, String cccd, String ngaySinh, String diaChi) {
         this.maNV = maNV;
         this.hoTen = hoTen;
@@ -21,6 +22,7 @@ public class NhanVien {
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
     }
+    //
 
     // Getters
     public String getMaNV() { return maNV; }

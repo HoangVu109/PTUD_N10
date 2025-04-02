@@ -4,6 +4,7 @@ public class TuyenTau {
     private String maTuyenTau;
     private String gaKhoiHanh;
     private String gaKetThuc;
+    private boolean daBiXoa;
 
     // Getters and Setters
     public String getMaTuyenTau() {
@@ -28,5 +29,23 @@ public class TuyenTau {
 
     public void setGaKetThuc(String gaKetThuc) {
         this.gaKetThuc = gaKetThuc;
+    }
+
+    public boolean isDaBiXoa() {
+        return daBiXoa;
+    }
+
+    public void setDaBiXoa(boolean daBiXoa) {
+        this.daBiXoa = daBiXoa;
+    }
+
+    @Override
+    public String toString() {
+        return "TuyenTau{" +
+                "maTuyenTau='" + maTuyenTau + '\'' +
+                ", gaKhoiHanh='" + gaKhoiHanh + '\'' +
+                ", gaKetThuc='" + gaKetThuc + '\'' +
+                ", daBiXoa=" + daBiXoa +
+                '}';
     }
 }

@@ -1,13 +1,11 @@
-package iuh.form;
+package iuh.form.NhanVien;
 
-import iuh.controller.NhanVienController;
-import iuh.dao.NhanVienDao;
-import iuh.gui.QuanLyNhanVienScreen;
+import iuh.controller.QuanLyController.NhanVienController;
+import iuh.dao.QuanLyDao.NhanVienDao;
+import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 
 public class XoaNhanVienForm extends JFrame {

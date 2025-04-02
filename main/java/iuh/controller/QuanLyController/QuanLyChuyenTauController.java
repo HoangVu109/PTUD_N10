@@ -1,7 +1,7 @@
-package iuh.controller;
+package iuh.controller.QuanLyController;
 
-import iuh.dao.QuanLyChuyenTauDao;
-import iuh.gui.QuanLyChuyenTauScreen;
+import iuh.dao.QuanLyDao.QuanLyChuyenTauDao;
+import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
 import iuh.model.ChuyenTau;
 
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +34,7 @@ public class QuanLyChuyenTauController {
                     chuyenTau.getMaChuyenTau(),
                     chuyenTau.getMaTau(),
                     dateFormat.format(chuyenTau.getGioKhoiHanh()),
-                    chuyenTau.getSoLuongToa(),
+//                    chuyenTau.getSoLuongToa(),
                     chuyenTau.getTuyenTau(),
                     chuyenTau.getSoLuongHanhKhach()
             };

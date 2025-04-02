@@ -1,4 +1,4 @@
-package iuh.dao;
+package iuh.dao.QuanLyDao;
 
 import iuh.connect.DatabaseConnection;
 
@@ -10,7 +10,9 @@ public class NhanVienDao {
 
     public List<String[]> getAllNhanVien() {
         List<String[]> nhanVienList = new ArrayList<>();
-        String sql = "{call sp_LayDanhSachNhanVien}";
+        // Lay nhan vien chi " Dang lam viec "
+
+        String sql = "{call sp_DanhSachNhanVienDangLamViec }";
 
         try (Connection conn = DatabaseConnection.getConnection();
              CallableStatement stmt = conn.prepareCall(sql);

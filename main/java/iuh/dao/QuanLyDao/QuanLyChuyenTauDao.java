@@ -1,4 +1,4 @@
-package iuh.dao;
+package iuh.dao.QuanLyDao;
 
 import iuh.connect.DatabaseConnection;
 import iuh.model.ChuyenTau;
@@ -29,7 +29,7 @@ public class QuanLyChuyenTauDao {
                     chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
                     chuyenTau.setMaTau(rs.getString("maTau"));
                     chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh"));
-                    chuyenTau.setSoLuongToa(rs.getInt("soLuongToa"));
+//                    chuyenTau.setSoLuongToa(rs.getInt("soLuongToa"));
 
                     String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
                     chuyenTau.setTuyenTau(tuyenTau);
@@ -68,7 +68,7 @@ public class QuanLyChuyenTauDao {
                         chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
                         chuyenTau.setMaTau(rs.getString("maTau"));
                         chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh"));
-                        chuyenTau.setSoLuongToa(rs.getInt("soLuongToa"));
+//                        chuyenTau.setSoLuongToa(rs.getInt("soLuongToa"));
 
                         String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
                         chuyenTau.setTuyenTau(tuyenTau);

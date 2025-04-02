@@ -1,14 +1,11 @@
-package iuh.gui;
+package iuh.gui.QuanLy;
 
-import iuh.connect.DatabaseConnection;
-import iuh.controller.QuanLyChuyenTauController;
+import iuh.controller.QuanLyController.QuanLyChuyenTauController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public class QuanLyChuyenTauScreen {
@@ -21,7 +18,7 @@ public class QuanLyChuyenTauScreen {
 
     public QuanLyChuyenTauScreen() {
         String[] columnNames = {
-                "Mã chuyến tàu", "Mã tàu", "Giờ khởi hành", "Số lượng toa", "Tuyến tàu", "Số lượng hành khách"
+                "Mã chuyến tàu", "Mã tàu", "Giờ khởi hành", "Tuyến tàu", "Số lượng hành khách"
         };
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -164,7 +161,6 @@ public class QuanLyChuyenTauScreen {
         scrollPane.setBackground(new Color(245, 248, 250));
         scrollPane.getViewport().setBackground(Color.WHITE);
         inforPanel.add(scrollPane, BorderLayout.CENTER);
-
 
         return inforPanel;
     }

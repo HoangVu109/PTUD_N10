@@ -1,7 +1,7 @@
-package iuh.controller;
+package iuh.controller.QuanLyController;
 
-import iuh.dao.NhanVienDao;
-import iuh.gui.QuanLyNhanVienScreen;
+import iuh.dao.QuanLyDao.NhanVienDao;
+import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 
 import javax.swing.*;
 import java.util.ArrayList;

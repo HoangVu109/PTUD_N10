@@ -1,9 +1,9 @@
-package iuh.gui;
+package iuh.gui.QuanLy;
 
-import iuh.controller.NhanVienController;
-import iuh.form.XoaNhanVienForm;
-import iuh.form.SuaNhanVienForm;
-import iuh.form.ThemNhanVienForm;
+import iuh.controller.QuanLyController.NhanVienController;
+import iuh.form.NhanVien.XoaNhanVienForm;
+import iuh.form.NhanVien.SuaNhanVienForm;
+import iuh.form.NhanVien.ThemNhanVienForm;
 
 
 import javax.swing.*;

@@ -6,6 +6,7 @@ public class HanhKhach {
     private String soDT;
     private String diaChi;
 
+
     // Getters and Setters
     public String getSoCCCD() {
         return soCCCD;

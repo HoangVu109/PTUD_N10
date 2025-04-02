@@ -1,7 +1,7 @@
-package iuh.form;
+package iuh.form.NhanVien;
 
-import iuh.dao.NhanVienDao;
-import iuh.gui.QuanLyNhanVienScreen;
+import iuh.dao.QuanLyDao.NhanVienDao;
+import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;

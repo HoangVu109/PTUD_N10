@@ -1,4 +1,4 @@
-package iuh.gui;
+package iuh.gui.QuanLy;
 
 import javax.swing.*;
 import java.awt.*;

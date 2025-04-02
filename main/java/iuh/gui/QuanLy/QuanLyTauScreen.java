@@ -1,15 +1,15 @@
-package iuh.gui;
+package iuh.gui.QuanLy;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class QuanLyTuyenTauScreen {
+public class QuanLyTauScreen {
     private JPanel panel;
 
-    public QuanLyTuyenTauScreen() {
+    public QuanLyTauScreen() {
         panel = new JPanel();
         panel.setBackground(new Color(245, 245, 245));
-        JLabel label = new JLabel("Màn hình Quản lý tuyến tàu");
+        JLabel label = new JLabel("Màn hình Quản lý tàu");
         label.setFont(new Font("Arial", Font.BOLD, 20));
         panel.add(label);
     }

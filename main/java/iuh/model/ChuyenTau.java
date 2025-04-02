@@ -6,9 +6,12 @@ public class ChuyenTau {
     private String maChuyenTau;
     private String maTau;
     private Timestamp gioKhoiHanh;
-    private int soLuongToa;
     private String tuyenTau;
     private int soLuongHanhKhach;
+    private boolean daBiHuy ;
+    private int soLuongHKToiDa;
+    private int soluonngHK;
+
 
     // Getters and Setters
     public String getMaChuyenTau() {
@@ -35,14 +38,6 @@ public class ChuyenTau {
         this.gioKhoiHanh = gioKhoiHanh;
     }
 
-    public int getSoLuongToa() {
-        return soLuongToa;
-    }
-
-    public void setSoLuongToa(int soLuongToa) {
-        this.soLuongToa = soLuongToa;
-    }
-
     public String getTuyenTau() {
         return tuyenTau;
     }
@@ -61,13 +56,28 @@ public class ChuyenTau {
     public ChuyenTau() {
     }
 
-    public ChuyenTau(String maChuyenTau, String maTau, int soLuongToa, int soLuongHanhKhach, String tuyenTau, Timestamp gioKhoiHanh) {
-        this.maChuyenTau = maChuyenTau;
-        this.maTau = maTau;
-        this.soLuongToa = soLuongToa;
-        this.soLuongHanhKhach = soLuongHanhKhach;
-        this.tuyenTau = tuyenTau;
-        this.gioKhoiHanh = gioKhoiHanh;
+    public int getSoluonngHK() {
+        return soluonngHK;
+    }
+
+    public void setSoluonngHK(int soluonngHK) {
+        this.soluonngHK = soluonngHK;
+    }
+
+    public int getSoLuongHKToiDa() {
+        return soLuongHKToiDa;
+    }
+
+    public void setSoLuongHKToiDa(int soLuongHKToiDa) {
+        this.soLuongHKToiDa = soLuongHKToiDa;
+    }
+
+    public boolean isDaBiHuy() {
+        return daBiHuy;
+    }
+
+    public void setDaBiHuy(boolean daBiHuy) {
+        this.daBiHuy = daBiHuy;
     }
 
     @Override
@@ -76,9 +86,11 @@ public class ChuyenTau {
                 "maChuyenTau='" + maChuyenTau + '\'' +
                 ", maTau='" + maTau + '\'' +
                 ", gioKhoiHanh=" + gioKhoiHanh +
-                ", soLuongToa=" + soLuongToa +
                 ", tuyenTau='" + tuyenTau + '\'' +
                 ", soLuongHanhKhach=" + soLuongHanhKhach +
+                ", daBiHuy=" + daBiHuy +
+                ", soLuongHKToiDa=" + soLuongHKToiDa +
+                ", soluonngHK=" + soluonngHK +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package iuh.main;
 
 import iuh.connect.DatabaseConnection;
-import iuh.gui.*;
+import iuh.gui.QuanLy.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,10 +12,10 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class GaSaiGonUI extends JFrame {
+public class QuanLyGUI extends JFrame {
     private JPanel mainArea; // Lưu trữ mainArea để cập nhật nội dung
 
-    public GaSaiGonUI() throws SQLException {
+    public QuanLyGUI() throws SQLException {
 
         Connection dbConnection = DatabaseConnection.getConnection();
         if (dbConnection == null) {
@@ -54,27 +54,23 @@ public class GaSaiGonUI extends JFrame {
 
     // Tạo Menu Bên Trái
     private JPanel createMenuPanel() {
-        JPanel menuPanel = new JPanel(new GridBagLayout());
+        // Sử dụng BoxLayout theo trục Y (dọc) để xếp các thành phần
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setPreferredSize(new Dimension(200, 0));
         menuPanel.setBackground(new Color(46, 58, 89)); // Màu xanh đậm #2E3A59
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-
         // Logo "Ga Sài Gòn"
-        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ImageIcon logoIcon = new ImageIcon("src/main/java/iuh/icons/LoGoGa.png");
         JLabel logoLabel = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH)));
-        JLabel textLabel = new JLabel("");
-        textLabel.setForeground(Color.WHITE);
-        textLabel.setFont(new Font("Arial", Font.BOLD, 16));
         logoPanel.add(logoLabel);
-        logoPanel.add(textLabel);
         logoPanel.setBackground(new Color(46, 58, 89));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        menuPanel.add(logoPanel, gbc);
+        logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa theo trục X
+        menuPanel.add(logoPanel);
+
+        // Thêm khoảng cách dọc
+        menuPanel.add(Box.createVerticalStrut(10));
 
 
         // Danh sách các chức năng
@@ -90,8 +86,9 @@ public class GaSaiGonUI extends JFrame {
         // Thêm các nút menu
         for (int i = 0; i < menuItems.length; i++) {
             JButton menuButton = createMenuButton(menuItems[i], iconPaths[i]);
-            gbc.gridy = i + 1;
-            menuPanel.add(menuButton, gbc);
+            menuButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa theo trục X
+            menuPanel.add(menuButton);
+            menuPanel.add(Box.createVerticalStrut(10)); // Thêm khoảng cách giữa các nút
         }
 
         return menuPanel;
@@ -234,6 +231,6 @@ public class GaSaiGonUI extends JFrame {
     }
 
     public static void main(String[] args) throws SQLException {
-        new GaSaiGonUI();
+        new QuanLyGUI();
     }
 }

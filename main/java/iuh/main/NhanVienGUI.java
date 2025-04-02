@@ -1,5 +1,4 @@
 package iuh.main;
-// Vo Tran Gia Huy - 22684431
 import iuh.connect.DatabaseConnection;
 
 import javax.swing.*;

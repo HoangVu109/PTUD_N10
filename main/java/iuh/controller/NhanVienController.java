@@ -20,7 +20,7 @@ public class NhanVienController {
         loadInitialData();
     }
 
-    private void loadInitialData() {
+    public void loadInitialData() {
         List<String[]> nhanVienList = model.getAllNhanVien();
         fullData = nhanVienList.toArray(new String[0][]);
         danhsachgoc.clear();
@@ -30,21 +30,18 @@ public class NhanVienController {
         updateTableData(fullData);
     }
 
-    // Cập nhật dữ liệu cho JTable
     private void updateTableData(String[][] data) {
         view.getTableModel().setRowCount(0);
-        for (int i = 0; i < data.length; i++) {
-            String[] row = data[i];
-            Object[] displayRow = new Object[4];
+        for (String[] row : data) {
+            Object[] displayRow = new Object[5];
             displayRow[0] = row[0]; // maSoNV
             displayRow[1] = row[1]; // hoTenNV
-            displayRow[2] = row[2].equals("0") ? "Quản lý" : "Nhân viên"; // chucVu: 0 = Quản lý, 1 = Nhân viên
-            displayRow[3] = row[3].equals("0") ? "Nam" : "Nữ"; // gioiTinh: 0 = Nam, 1 = Nữ
+            displayRow[2] = row[2].equals("0") ? "Quản lý" : "Nhân viên"; // chucVu
+            displayRow[3] = row[3].equals("0") ? "Nam" : "Nữ"; // gioiTinh
             view.getTableModel().addRow(displayRow);
         }
     }
 
-    // Xử lý tìm kiếm
     public void searchEmployee(String searchText) {
         searchText = searchText.trim().toLowerCase();
         List<String[]> filteredData = new ArrayList<>();
@@ -53,8 +50,17 @@ public class NhanVienController {
         for (int i = 0; i < fullData.length; i++) {
             String[] row = fullData[i];
             boolean match = false;
-            for (String cell : row) {
-                if (cell != null && cell.toLowerCase().contains(searchText)) {
+            for (int j = 0; j < row.length; j++) {
+                String cellText = row[j];
+
+                if (j == 2) { // chucVu
+                    cellText = cellText.equals("0") ? "quản lý" : "nhân viên";
+                } else if (j == 3) { // gioiTinh
+                    cellText = cellText.equals("0") ? "nam" : "nữ";
+                } else if (j == 9) { // daNghiViec
+                    cellText = cellText.equals("1") ? "đã nghỉ việc" : "đang làm việc";
+                }
+                if (cellText != null && cellText.toLowerCase().contains(searchText)) {
                     match = true;
                     break;
                 }
@@ -77,18 +83,20 @@ public class NhanVienController {
         }
     }
 
-    // Cập nhật thông tin cho employeePanel
     public void updateEmployeeInfo(int selectedRow) {
         if (selectedRow != -1 && selectedRow < danhsachgoc.size()) {
             int originalIndex = danhsachgoc.get(selectedRow);
-            String maNV = fullData[originalIndex][0];      // maSoNV
-            String hoTen = fullData[originalIndex][1];     // hoTenNV
-            String chucVu = fullData[originalIndex][2].equals("0") ? "Quản lý" : "Nhân viên"; // chucVu: 0 = Quản lý, 1 = Nhân viên
-            String gioiTinh = fullData[originalIndex][3].equals("0") ? "Nam" : "Nữ";          // gioiTinh: 0 = Nam, 1 = Nữ
-            String cccd = fullData[originalIndex][4];      // soCCCD
-            String ngaySinh = fullData[originalIndex][5];  // ngaySinh
-            String diaChi = fullData[originalIndex][6];    // diaChi
-            view.updateEmployeePanel(maNV, hoTen, chucVu, gioiTinh, cccd, ngaySinh, diaChi);
+            String[] data = fullData[originalIndex];
+            view.updateEmployeePanel(
+                    data[0], // maNV
+                    data[1], // hoTen
+                    data[2].equals("0") ? "Quản lý" : "Nhân viên", // chucVu
+                    data[3].equals("0") ? "Nam" : "Nữ", // gioiTinh
+                    data[4], // cccd
+                    data[5], // ngaySinh
+                    data[6], // diaChi
+                    data[9].equals("1") // daNghiViec
+            );
         }
     }
 
@@ -96,7 +104,7 @@ public class NhanVienController {
         return fullData;
     }
 
-    public List<Integer> getOriginalIndices() {
+    public List<Integer> getDanhSachGoc() {
         return danhsachgoc;
     }
 }

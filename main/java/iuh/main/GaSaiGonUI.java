@@ -64,7 +64,7 @@ public class GaSaiGonUI extends JFrame {
 
         // Logo "Ga Sài Gòn"
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        ImageIcon logoIcon = new ImageIcon("main/java/iuh/icons/LoGoGa.png");
+        ImageIcon logoIcon = new ImageIcon("src/main/java/iuh/icons/LoGoGa.png");
         JLabel logoLabel = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH)));
         JLabel textLabel = new JLabel("");
         textLabel.setForeground(Color.WHITE);
@@ -83,8 +83,8 @@ public class GaSaiGonUI extends JFrame {
                 "Quản lý tàu", "Quản lý khách hàng", "Tra cứu thông tin", "Thống kê", "Tài khoản"
         };
         String[] iconPaths = {
-                "main/java/iuh/icons/home.png", "main/java/iuh/icons/quanlynhanvien.png", "main/java/iuh/icons/quanlychuyentau.png", "main/java/iuh/icons/quanlytuyentau.png",
-                "main/java/iuh/icons/quanlytau.png", "main/java/iuh/icons/quanlykhachhang.png", "main/java/iuh/icons/tra cuu.png", "main/java/iuh/icons/thong ke.png", "main/java/iuh/icons/Myacount.png"
+                "src/main/java/iuh/icons/home.png", "src/main/java/iuh/icons/quanlynhanvien.png", "src/main/java/iuh/icons/quanlychuyentau.png", "src/main/java/iuh/icons/quanlytuyentau.png",
+                "src/main/java/iuh/icons/quanlytau.png", "src/main/java/iuh/icons/quanlykhachhang.png", "src/main/java/iuh/icons/tra cuu.png", "src/main/java/iuh/icons/thong ke.png", "src/main/java/iuh/icons/Myacount.png"
         };
 
         // Thêm các nút menu
@@ -194,7 +194,7 @@ public class GaSaiGonUI extends JFrame {
         spacer.setPreferredSize(new Dimension(600, 0)); // Điều chỉnh độ rộng tùy ý
 
         // Logo thông báo
-        ImageIcon notificationIcon = new ImageIcon("main/java/iuh/icons/notification.png");
+        ImageIcon notificationIcon = new ImageIcon("src/main/java/iuh/icons/notification.png");
         JLabel notificationLabel = new JLabel(new ImageIcon(notificationIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 
         // Thêm các thành phần vào taskbar

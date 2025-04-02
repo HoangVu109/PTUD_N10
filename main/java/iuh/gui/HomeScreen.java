@@ -17,7 +17,7 @@ public class HomeScreen {
 
         // Bước 1: Thêm logo
         JLabel logoLabel = new JLabel();
-        ImageIcon logoIcon = new ImageIcon("main/java/iuh/icons/logo.png"); // Đường dẫn logo
+        ImageIcon logoIcon = new ImageIcon("src/main/java/iuh/icons/logo.png"); // Đường dẫn logo
         logoLabel.setIcon(new ImageIcon(logoIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa logo
         panel.add(logoLabel);
@@ -42,17 +42,17 @@ public class HomeScreen {
         row1.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa hàng
 
         // Ô 1: Số vé bán/ngày
-        JPanel ticketPanel = createInfoPanel("Số vé bán/ngày", "90", "main/java/iuh/icons/ticket.png");
+        JPanel ticketPanel = createInfoPanel("Số vé bán/ngày", "90", "src/main/java/iuh/icons/ticket.png");
         row1.add(ticketPanel);
         row1.add(Box.createHorizontalStrut(20));
 
         // Ô 2: Doanh thu/ngày
-        JPanel revenuePanel = createInfoPanel("Doanh thu/ngày", "5,430,000 VND", "main/java/iuh/icons/revenue.png");
+        JPanel revenuePanel = createInfoPanel("Doanh thu/ngày", "5,430,000 VND", "src/main/java/iuh/icons/revenue.png");
         row1.add(revenuePanel);
         row1.add(Box.createHorizontalStrut(20));
 
         // Ô 3: Lịch trình
-        JPanel schedulePanel = createInfoPanel("Lịch trình", "", "main/java/iuh/icons/schedule.png");
+        JPanel schedulePanel = createInfoPanel("Lịch trình", "", "src/main/java/iuh/icons/schedule.png");
         row1.add(schedulePanel);
 
         panel.add(row1); // Thêm hàng 1 vào panel chính
@@ -83,7 +83,7 @@ public class HomeScreen {
 
         // Bước 5: Hàng 3 - Hình ảnh tàu
         JLabel trainImageLabel = new JLabel();
-        ImageIcon trainIcon = new ImageIcon("main/java/iuh/icons/Doantau.png"); // Đường dẫn ảnh tàu
+        ImageIcon trainIcon = new ImageIcon("src/main/java/iuh/icons/Doantau.png"); // Đường dẫn ảnh tàu
         trainImageLabel.setIcon(new ImageIcon(trainIcon.getImage().getScaledInstance(700, 200, Image.SCALE_SMOOTH)));
         trainImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa ảnh
         trainImageLabel.setBorder(BorderFactory.createCompoundBorder(
@@ -92,9 +92,9 @@ public class HomeScreen {
         panel.add(trainImageLabel);
     }
 
-    // Hàm tạo một ô thông tin (như Số vé bán/ngày, Doanh thu/ngày, v.v.) với hiệu ứng bóng mờ
+    // Hàm tạo một ô thông tin (như Số vé bán/ngày, Doanh thu/ngày, v.v.)
     private JPanel createInfoPanel(String title, String value, String iconPath) {
-        // Tạo một JPanel tùy chỉnh để bo tròn góc và thêm hiệu ứng bóng mờ
+        // Tạo một JPanel tùy chỉnh
         JPanel infoPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -115,7 +115,7 @@ public class HomeScreen {
         infoPanel.setMaximumSize(new Dimension(200, 120)); // Giới hạn kích thước
         infoPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15)); // Padding trong ô
 
-        // Thêm biểu tượng nếu có
+        // Thêm biểu tượng
         if (iconPath != null) {
             ImageIcon icon = new ImageIcon(iconPath);
             JLabel iconLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
@@ -124,7 +124,7 @@ public class HomeScreen {
             infoPanel.add(Box.createVerticalStrut(5));
         }
 
-        // Thêm giá trị nếu có
+        // Thêm giá trị
         if (!value.isEmpty()) {
             JLabel valueLabel = new JLabel(value);
             valueLabel.setFont(new Font("Arial", Font.PLAIN, 18)); // Font không in đậm

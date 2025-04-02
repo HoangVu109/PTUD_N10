@@ -42,6 +42,7 @@ public class QuanLyChuyenTauScreen {
         inforPanel = createInforPanel();
         panel.add(inforPanel, BorderLayout.CENTER);
 
+        // Tải dữ liệu ban đầu
         controller.loadInitialData();
     }
 
@@ -86,7 +87,7 @@ public class QuanLyChuyenTauScreen {
 
         findPanel.add(Box.createHorizontalStrut(10));
 
-        ImageIcon searchIcon = new ImageIcon("main/java/iuh/icons/Find.png");
+        ImageIcon searchIcon = new ImageIcon("src/main/java/iuh/icons/Find.png");
         JLabel searchLabel = new JLabel(new ImageIcon(searchIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
         searchLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         searchLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,55 +165,6 @@ public class QuanLyChuyenTauScreen {
         scrollPane.getViewport().setBackground(Color.WHITE);
         inforPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel paginationPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        paginationPanel.setBackground(new Color(245, 248, 250));
-
-        JButton prevButton = new JButton("<<");
-        prevButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        prevButton.setBackground(Color.WHITE);
-        prevButton.setForeground(new Color(30, 144, 255));
-        prevButton.setFocusPainted(false);
-        prevButton.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-        prevButton.setPreferredSize(new Dimension(40, 40));
-
-        JButton page1Button = new JButton("1");
-        page1Button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        page1Button.setBackground(Color.WHITE);
-        page1Button.setForeground(new Color(30, 144, 255));
-        page1Button.setFocusPainted(false);
-        page1Button.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-        page1Button.setPreferredSize(new Dimension(40, 40));
-
-        JButton page2Button = new JButton("2");
-        page2Button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        page2Button.setBackground(Color.WHITE);
-        page2Button.setForeground(new Color(30, 144, 255));
-        page2Button.setFocusPainted(false);
-        page2Button.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-        page2Button.setPreferredSize(new Dimension(40, 40));
-
-        JButton page3Button = new JButton("3");
-        page3Button.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        page3Button.setBackground(Color.WHITE);
-        page3Button.setForeground(new Color(30, 144, 255));
-        page3Button.setFocusPainted(false);
-        page3Button.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-        page3Button.setPreferredSize(new Dimension(40, 40));
-
-        JButton nextButton = new JButton(">>");
-        nextButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        nextButton.setBackground(Color.WHITE);
-        nextButton.setForeground(new Color(30, 144, 255));
-        nextButton.setFocusPainted(false);
-        nextButton.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-        nextButton.setPreferredSize(new Dimension(40, 40));
-
-        paginationPanel.add(prevButton);
-        paginationPanel.add(page1Button);
-        paginationPanel.add(page2Button);
-        paginationPanel.add(page3Button);
-        paginationPanel.add(nextButton);
-        inforPanel.add(paginationPanel, BorderLayout.SOUTH);
 
         return inforPanel;
     }
@@ -223,28 +175,5 @@ public class QuanLyChuyenTauScreen {
 
     public JPanel getPanel() {
         return panel;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Khởi tạo kết nối khi ứng dụng bắt đầu
-            DatabaseConnection.initializeConnection();
-
-            JFrame frame = new JFrame("Quản Lý Chuyến Tàu");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(900, 600);
-            frame.add(new QuanLyChuyenTauScreen().getPanel());
-            frame.setLocationRelativeTo(null);
-
-            // Đóng kết nối khi cửa sổ chính đóng
-            frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    DatabaseConnection.closeConnection();
-                }
-            });
-
-            frame.setVisible(true);
-        });
     }
 }

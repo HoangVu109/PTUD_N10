@@ -1,44 +1,114 @@
 package iuh.model;
 
+import java.util.Date;
+
 public class NhanVien {
-    private String maNV;
-    private String hoTen;
-    private String chucVu;
-    private String gioiTinh;
-    private String cccd;
-    private String ngaySinh;
+    private String maSoNV;
+    private String hoTenNV;
+    private int chucVu;
+    private int gioiTinh;
+    private String soCCCD;
+    private Date ngaySinh;
     private String diaChi;
+    private String soDT;
+    private String matKhau;
+    private boolean daNghiViec;
 
     // Constructors không có gì
     public NhanVien() {
     }
+
     //Constructors day du
-    public NhanVien(String maNV, String hoTen, String chucVu, String gioiTinh, String cccd, String ngaySinh, String diaChi) {
-        this.maNV = maNV;
-        this.hoTen = hoTen;
+    public NhanVien(String maSoNV, String hoTenNV, int chucVu, int gioiTinh, String soCCCD, Date ngaySinh, String diaChi, String soDT, String matKhau,int tinhTrang) {
+        this.maSoNV = maSoNV;
+        this.hoTenNV = hoTenNV;
         this.chucVu = chucVu;
         this.gioiTinh = gioiTinh;
-        this.cccd = cccd;
+        this.soCCCD = soCCCD;
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.matKhau = matKhau;
+        //
     }
-    //
 
-    // Getters
-    public String getMaNV() { return maNV; }
-    public String getHoTen() { return hoTen; }
-    public String getChucVu() { return chucVu; }
-    public String getGioiTinh() { return gioiTinh; }
-    public String getCccd() { return cccd; }
-    public String getNgaySinh() { return ngaySinh; }
-    public String getDiaChi() { return diaChi; }
-
-    // Setters
-    public void setMaNV(String maNV) { this.maNV = maNV; }
-    public void setHoTen(String hoTen) { this.hoTen = hoTen; }
-    public void setChucVu(String chucVu) { this.chucVu = chucVu; }
-    public void setGioiTinh(String gioiTinh) { this.gioiTinh = gioiTinh; }
-    public void setCccd(String cccd) { this.cccd = cccd; }
-    public void setNgaySinh(String ngaySinh) { this.ngaySinh = ngaySinh; }
-    public void setDiaChi(String diaChi) { this.diaChi = diaChi; }
+    public String getMaSoNV() {
+        return maSoNV;
     }
+
+    public void setMaSoNV(String maSoNV) {
+        this.maSoNV = maSoNV;
+    }
+
+    public String getHoTenNV() {
+        return hoTenNV;
+    }
+
+    public void setHoTenNV(String hoTenNV) {
+        this.hoTenNV = hoTenNV;
+    }
+
+    public int getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(int chucVu) {
+        this.chucVu = chucVu;
+    }
+
+    public int getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(int gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getSoCCCD() {
+        return soCCCD;
+    }
+
+    public void setSoCCCD(String soCCCD) {
+        this.soCCCD = soCCCD;
+    }
+
+    public Date getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getSoDT() {
+        return soDT;
+    }
+
+    public void setSoDT(String soDT) {
+        this.soDT = soDT;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
+    public boolean isDaNghiViec() {
+        return daNghiViec;
+    }
+
+    public void setDaNghiViec(boolean daNghiViec) {
+        this.daNghiViec = daNghiViec;
+    }
+}

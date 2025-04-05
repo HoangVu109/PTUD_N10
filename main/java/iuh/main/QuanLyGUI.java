@@ -25,9 +25,9 @@ public class QuanLyGUI extends JFrame {
         // Thiết lập cửa sổ chính
         setTitle("GA SÀI GÒN - HỆ THỐNG QUẢN LÝ BÁN VÉ TÀU HỎA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 750);
-        // Tắt thanh title bar mặc định
-
+//        setSize(1200, 750);
+    // fullscreen
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Tạo layout chính
         JPanel mainPanel = new JPanel(new BorderLayout());

@@ -1,6 +1,6 @@
 package iuh.form.NhanVien;
 
-import iuh.dao.QuanLyDao.QuanLyNhanVienDao;
+import iuh.dao.QuanLyDao.NhanVienDao;
 import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 import com.toedter.calendar.JDateChooser;
 
@@ -12,12 +12,12 @@ public class ThemNhanVienForm extends JFrame {
     private JTextField maNVField, hoTenField, cccdField, soDTField, diaChiField, matKhauField;
     private JDateChooser ngaySinhChooser;
     private JComboBox<String> chucVuComboBox, gioiTinhComboBox;
-    private QuanLyNhanVienDao dao;
+    private NhanVienDao dao;
     private QuanLyNhanVienScreen parentScreen;
 
     public ThemNhanVienForm(QuanLyNhanVienScreen parentScreen) {
         this.parentScreen = parentScreen;
-        this.dao = new QuanLyNhanVienDao();
+        this.dao = new NhanVienDao();
         initializeUI();
     }
 

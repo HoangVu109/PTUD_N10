@@ -1,6 +1,6 @@
 package iuh.form.NhanVien;
 
-import iuh.dao.QuanLyDao.QuanLyNhanVienDao;
+import iuh.dao.QuanLyDao.NhanVienDao;
 import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 import com.toedter.calendar.JDateChooser;
 
@@ -13,13 +13,13 @@ public class SuaNhanVienForm extends JFrame {
     private JTextField maNVField, hoTenField, cccdField, soDTField, diaChiField, matKhauField;
     private JDateChooser ngaySinhChooser;
     private JComboBox<String> chucVuComboBox, gioiTinhComboBox;
-    private QuanLyNhanVienDao dao;
+    private NhanVienDao dao;
     private QuanLyNhanVienScreen parentScreen;
 
     public SuaNhanVienForm(QuanLyNhanVienScreen parentScreen, String maNV, String hoTen, String chucVu, String gioiTinh,
                            String cccd, String soDT, String ngaySinh, String diaChi, String matKhau) {
         this.parentScreen = parentScreen;
-        this.dao = new QuanLyNhanVienDao();
+        this.dao = new NhanVienDao();
         setTitle("Sửa nhân viên");
         setSize(450, 600);
         setLocationRelativeTo(null);
@@ -61,6 +61,7 @@ public class SuaNhanVienForm extends JFrame {
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(createInputPanel("Số ĐT:", soDTField = new JTextField(soDT, 15)));
         mainPanel.add(Box.createVerticalStrut(15));
+        //set do dai cua textfield cua ngaysinh
 
         ngaySinhChooser = new JDateChooser();
 

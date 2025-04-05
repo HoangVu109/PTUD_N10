@@ -29,11 +29,6 @@ public class Tau {
     public void setDaBiXoa(boolean daBiXoa) {
         this.daBiXoa = daBiXoa;
     }
-   public void getDanhSachTau() {
-        System.out.println("Mã tàu: " + maTau);
-        System.out.println("Mã tuyến tàu: " + maTuyenTau);
-        System.out.println("Đã bị xóa: " + (daBiXoa ? "Có" : "Không"));
-    }
 
     @Override
     public String toString() {

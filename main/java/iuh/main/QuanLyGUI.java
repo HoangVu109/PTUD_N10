@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class QuanLyGUI extends JFrame {
-    private JPanel mainArea;
+    private JPanel mainArea; // Lưu trữ mainArea để cập nhật nội dung
 
     public QuanLyGUI() throws SQLException {
 
@@ -25,8 +25,8 @@ public class QuanLyGUI extends JFrame {
         // Thiết lập cửa sổ chính
         setTitle("GA SÀI GÒN - HỆ THỐNG QUẢN LÝ BÁN VÉ TÀU HỎA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //full screen
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(1200, 750);
+        // Tắt thanh title bar mặc định
 
 
         // Tạo layout chính
@@ -40,6 +40,8 @@ public class QuanLyGUI extends JFrame {
         // Phần Khu Vực Chính (bao gồm thanh taskbar và khu vực trống)
         mainArea = createMainArea();
         mainPanel.add(mainArea, BorderLayout.CENTER);
+
+        // Thêm mainPanel vào frame
         add(mainPanel);
         //Kết nối cơ sở dữ liệu
         DatabaseConnection.getConnection();
@@ -52,7 +54,7 @@ public class QuanLyGUI extends JFrame {
 
     // Tạo Menu Bên Trái
     private JPanel createMenuPanel() {
-        // BoxLayout cho menuPanel
+        // Sử dụng BoxLayout theo trục Y (dọc) để xếp các thành phần
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setPreferredSize(new Dimension(200, 0));

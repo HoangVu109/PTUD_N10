@@ -6,17 +6,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuanLyNhanVienDao {
+public class NhanVienDao {
 
     public List<String[]> getAllNhanVien() {
         List<String[]> nhanVienList = new ArrayList<>();
         // Lay nhan vien chi " Dang lam viec "
 
-        String sql = "{call sp_LayDanhSachNhanVienDangLamViec }";
+        String sql = "{call sp_DanhSachNhanVienDangLamViec }";
 
         try (Connection conn = DatabaseConnection.getConnection();
              CallableStatement stmt = conn.prepareCall(sql);
-
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -98,5 +97,4 @@ public class QuanLyNhanVienDao {
             return false;
         }
     }
-
 }

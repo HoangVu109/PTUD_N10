@@ -11,62 +11,45 @@ public class QuanLyChuyenTauDao {
 
     public List<ChuyenTau> getAllChuyenTau() {
         List<ChuyenTau> chuyenTauList = new ArrayList<>();
-        String procedureCall = "{call sp_LayDanhSachChuyenTau}";
+        String query = "SELECT ct.maChuyenTau, ct.maTau, ct.gioKhoiHanh, t.maTuyenTau, tt.gaKhoiHanh, tt.gaKetThuc, " +
+                "(SELECT COUNT(*) FROM ToaTau tt WHERE tt.maTau = ct.maTau) AS soLuongToa, " +
+                "(SELECT COUNT(*) FROM VeTau vt WHERE vt.maChuyenTau = ct.maChuyenTau AND vt.daBiHuy = 0) AS soLuongHanhKhach " +
+                "FROM ChuyenTau ct " +
+                "JOIN Tau t ON ct.maTau = t.maTau " +
+                "JOIN TuyenTau tt ON t.maTuyenTau = tt.maTuyenTau " +
+                "WHERE ct.daBiHuy = 0"; // Chỉ lấy các chuyến tàu chưa bị hủy
 
         try {
             Connection conn = DatabaseConnection.getConnection();
-            try (CallableStatement cstmt = conn.prepareCall(procedureCall);
-                 ResultSet rs = cstmt.executeQuery()) {
+            try (PreparedStatement pstmt = conn.prepareStatement(query);
+                 ResultSet rs = pstmt.executeQuery()) {
 
                 while (rs.next()) {
                     ChuyenTau chuyenTau = new ChuyenTau();
                     chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
                     chuyenTau.setMaTau(rs.getString("maTau"));
                     chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh"));
-                    chuyenTau.setDaBiHuy(rs.getBoolean("daBiHuy"));
-                    chuyenTau.setSoLuongHKToiDa(rs.getInt("soLuongHKToiDa"));
-                    chuyenTau.setSoluongHK(rs.getInt("soLuongHK"));
+//                    chuyenTau.setSoLuongToa(rs.getInt("soLuongToa"));
 
                     String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
                     chuyenTau.setTuyenTau(tuyenTau);
 
+                    chuyenTau.setSoLuongHanhKhach(rs.getInt("soLuongHanhKhach"));
                     chuyenTauList.add(chuyenTau);
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Lỗi truy vấn sp_LayDanhSachChuyenTau: " + e.getMessage());
+            System.err.println("Lỗi truy vấn getAllChuyenTau: " + e.getMessage());
             e.printStackTrace();
         }
         return chuyenTauList;
     }
 
-    public boolean addChuyenTau(String maChuyenTau, String maTau, Timestamp gioKhoiHanh, boolean daBiHuy, int soLuongHKToiDa, int soLuongHK) {
-        String procedureCall = "{call sp_ThemChuyenTau(?, ?, ?, ?, ?, ?)}";
-
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            try (CallableStatement cstmt = conn.prepareCall(procedureCall)) {
-                cstmt.setString(1, maChuyenTau);
-                cstmt.setString(2, maTau);
-                cstmt.setTimestamp(3, new Timestamp(gioKhoiHanh.getTime()));
-                cstmt.setBoolean(4, daBiHuy);
-                cstmt.setInt(5, soLuongHKToiDa);
-                cstmt.setInt(6, soLuongHK);
-
-                int rowsAffected = cstmt.executeUpdate();
-                return rowsAffected > 0;
-            }
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi thêm chuyến tàu: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public List<ChuyenTau> searchChuyenTau(String keyword) {
         List<ChuyenTau> chuyenTauList = new ArrayList<>();
         String query = "SELECT ct.maChuyenTau, ct.maTau, ct.gioKhoiHanh, t.maTuyenTau, tt.gaKhoiHanh, tt.gaKetThuc, " +
-                "ct.soLuongHKToiDa, ct.soLuongHK " +
+                "(SELECT COUNT(*) FROM ToaTau tt WHERE tt.maTau = ct.maTau) AS soLuongToa, " +
+                "(SELECT COUNT(*) FROM VeTau vt WHERE vt.maChuyenTau = ct.maChuyenTau AND vt.daBiHuy = 0) AS soLuongHanhKhach " +
                 "FROM ChuyenTau ct " +
                 "JOIN Tau t ON ct.maTau = t.maTau " +
                 "JOIN TuyenTau tt ON t.maTuyenTau = tt.maTuyenTau " +
@@ -75,9 +58,9 @@ public class QuanLyChuyenTauDao {
         try {
             Connection conn = DatabaseConnection.getConnection();
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                String timkiem = "%" + keyword + "%";
-                pstmt.setString(1, timkiem);
-                pstmt.setString(2, timkiem);
+                String searchPattern = "%" + keyword + "%";
+                pstmt.setString(1, searchPattern);
+                pstmt.setString(2, searchPattern);
 
                 try (ResultSet rs = pstmt.executeQuery()) {
                     while (rs.next()) {
@@ -85,12 +68,12 @@ public class QuanLyChuyenTauDao {
                         chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
                         chuyenTau.setMaTau(rs.getString("maTau"));
                         chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh"));
-                        chuyenTau.setSoLuongHKToiDa(rs.getInt("soLuongHKToiDa"));
-                        chuyenTau.setSoluongHK(rs.getInt("soLuongHK"));
+//                        chuyenTau.setSoLuongToa(rs.getInt("soLuongToa"));
 
                         String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
                         chuyenTau.setTuyenTau(tuyenTau);
 
+                        chuyenTau.setSoLuongHanhKhach(rs.getInt("soLuongHanhKhach"));
                         chuyenTauList.add(chuyenTau);
                     }
                 }
@@ -101,83 +84,4 @@ public class QuanLyChuyenTauDao {
         }
         return chuyenTauList;
     }
-    // phuong thuc lay danh sach tau
-    public List<String> getMaTauList() {
-        List<String> maTauList = new ArrayList<>();
-        String query = "SELECT maTau FROM Tau WHERE daBiXoa = 0";
-
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            try (PreparedStatement pstmt = conn.prepareStatement(query);
-                 ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    maTauList.add(rs.getString("maTau"));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi lấy danh sách mã tàu: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return maTauList;
-    }
-
-    //  phương thức lấy danh sách tuyến tàu
-    public List<String> getTuyenTauList() {
-        List<String> tuyenTauList = new ArrayList<>();
-        String query = "SELECT gaKhoiHanh, gaKetThuc FROM TuyenTau WHERE daBiXoa = 0";
-
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            try (PreparedStatement pstmt = conn.prepareStatement(query);
-                 ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
-                    tuyenTauList.add(tuyenTau);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi lấy danh sách tuyến tàu: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return tuyenTauList;
-    }
-    public boolean updateChuyenTau(String maChuyenTau, String maTau, Timestamp gioKhoiHanh, boolean daBiHuy, int soLuongHKToiDa, int soLuongHK) {
-        String procedureCall = "{call sp_CapNhatChuyenTau(?, ?, ?, ?, ?, ?)}";
-
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            try (CallableStatement cstmt = conn.prepareCall(procedureCall)) {
-                cstmt.setString(1, maChuyenTau);
-                cstmt.setString(2, maTau);
-                cstmt.setTimestamp(3, gioKhoiHanh);
-                cstmt.setBoolean(4, daBiHuy);
-                cstmt.setInt(5, soLuongHKToiDa);
-                cstmt.setInt(6, soLuongHK);
-
-                int rowsAffected = cstmt.executeUpdate();
-                return rowsAffected > 0;
-            }
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi cập nhật chuyến tàu: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-    public boolean deleteChuyenTau(String maChuyenTau) {
-        String query = "UPDATE ChuyenTau SET daBiHuy = 1 WHERE maChuyenTau = ?"; // xoa nhan vien khong xoa khoi data ma chuyen sang -1
-
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, maChuyenTau);
-                int rowsAffected = pstmt.executeUpdate();
-                return rowsAffected > 0;
-            }
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi xóa chuyến tàu: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
 }

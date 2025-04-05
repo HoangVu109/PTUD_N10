@@ -87,7 +87,7 @@ public class QuanLyNhanVienDao {
     }
 
     public boolean deleteNhanVien(String maNV) {
-        String sql = "DELETE FROM NhanVien WHERE maSoNV = ?";
+        String sql = "UPDATE NhanVien SET daNghiViec = 1  WHERE maSoNV = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, maNV);

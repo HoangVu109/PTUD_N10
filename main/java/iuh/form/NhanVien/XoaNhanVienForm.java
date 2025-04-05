@@ -1,7 +1,7 @@
 package iuh.form.NhanVien;
 
 import iuh.controller.QuanLyController.NhanVienController;
-import iuh.dao.QuanLyDao.NhanVienDao;
+import iuh.dao.QuanLyDao.QuanLyNhanVienDao;
 import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 
 import javax.swing.*;
@@ -11,13 +11,13 @@ import java.awt.geom.RoundRectangle2D;
 public class XoaNhanVienForm extends JFrame {
     private QuanLyNhanVienScreen view;
     private NhanVienController controller;
-    private NhanVienDao model;
+    private QuanLyNhanVienDao model;
     private int selectedRow;
 
     public XoaNhanVienForm(QuanLyNhanVienScreen view, NhanVienController controller, int selectedRow) {
         this.view = view;
         this.controller = controller;
-        this.model = new NhanVienDao();
+        this.model = new QuanLyNhanVienDao();
         this.selectedRow = selectedRow;
         initializeUI();
     }

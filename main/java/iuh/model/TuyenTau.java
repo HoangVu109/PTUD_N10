@@ -2,7 +2,7 @@ package iuh.model;
 
 public class TuyenTau {
     private String maTuyenTau;
-    private String gaKhoiHanh;
+    private String gaKhoiHanh = "Ga Sài Gòn";
     private String gaKetThuc;
     private boolean daBiXoa;
 
@@ -37,6 +37,18 @@ public class TuyenTau {
 
     public void setDaBiXoa(boolean daBiXoa) {
         this.daBiXoa = daBiXoa;
+    }
+
+    public String getTenTuyenTau() {
+        return gaKhoiHanh + " - " + gaKetThuc;
+    }
+
+    public String getDanhSachTuyenTau() {
+        return "Tuyến tàu: " + getTenTuyenTau() + "\n" +
+                "Mã tuyến tàu: " + maTuyenTau + "\n" +
+                "Ga khởi hành: " + gaKhoiHanh + "\n" +
+                "Ga kết thúc: " + gaKetThuc + "\n" +
+                "Đã bị xóa: " + (daBiXoa ? "Có" : "Không");
     }
 
     @Override

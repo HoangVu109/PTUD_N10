@@ -7,10 +7,9 @@ public class ChuyenTau {
     private String maTau;
     private Timestamp gioKhoiHanh;
     private String tuyenTau;
-    private int soLuongHanhKhach;
     private boolean daBiHuy ;
     private int soLuongHKToiDa;
-    private int soluonngHK;
+    private int soluongHK;
 
 
     // Getters and Setters
@@ -46,22 +45,15 @@ public class ChuyenTau {
         this.tuyenTau = tuyenTau;
     }
 
-    public int getSoLuongHanhKhach() {
-        return soLuongHanhKhach;
-    }
-
-    public void setSoLuongHanhKhach(int soLuongHanhKhach) {
-        this.soLuongHanhKhach = soLuongHanhKhach;
-    }
     public ChuyenTau() {
     }
 
-    public int getSoluonngHK() {
-        return soluonngHK;
+    public int getSoluongHK() {
+        return soluongHK;
     }
 
-    public void setSoluonngHK(int soluonngHK) {
-        this.soluonngHK = soluonngHK;
+    public void setSoluongHK(int soluonngHK) {
+        this.soluongHK = soluonngHK;
     }
 
     public int getSoLuongHKToiDa() {
@@ -87,10 +79,9 @@ public class ChuyenTau {
                 ", maTau='" + maTau + '\'' +
                 ", gioKhoiHanh=" + gioKhoiHanh +
                 ", tuyenTau='" + tuyenTau + '\'' +
-                ", soLuongHanhKhach=" + soLuongHanhKhach +
                 ", daBiHuy=" + daBiHuy +
                 ", soLuongHKToiDa=" + soLuongHKToiDa +
-                ", soluonngHK=" + soluonngHK +
+                ", soluongHK=" + soluongHK +
                 '}';
     }
 }

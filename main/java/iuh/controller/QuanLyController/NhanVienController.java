@@ -1,6 +1,6 @@
 package iuh.controller.QuanLyController;
 
-import iuh.dao.QuanLyDao.NhanVienDao;
+import iuh.dao.QuanLyDao.QuanLyNhanVienDao;
 import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 
 import javax.swing.*;
@@ -9,13 +9,13 @@ import java.util.List;
 
 public class NhanVienController {
     private QuanLyNhanVienScreen view;
-    private NhanVienDao model;
+    private QuanLyNhanVienDao model;
     private String[][] fullData;
     private List<Integer> danhsachgoc;
 
     public NhanVienController(QuanLyNhanVienScreen view) {
         this.view = view;
-        this.model = new NhanVienDao();
+        this.model = new QuanLyNhanVienDao();
         this.danhsachgoc = new ArrayList<>();
         loadInitialData();
     }

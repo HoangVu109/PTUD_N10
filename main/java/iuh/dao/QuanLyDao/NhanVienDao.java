@@ -12,7 +12,7 @@ public class NhanVienDao {
         List<String[]> nhanVienList = new ArrayList<>();
         // Lay nhan vien chi " Dang lam viec "
 
-        String sql = "{call sp_DanhSachNhanVienDangLamViec }";
+        String sql = "{call sp_LayDanhSachNhanVienDangLamViec }";
 
         try (Connection conn = DatabaseConnection.getConnection();
              CallableStatement stmt = conn.prepareCall(sql);

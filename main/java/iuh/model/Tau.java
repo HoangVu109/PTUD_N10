@@ -5,6 +5,11 @@ public class Tau {
     private String maTuyenTau;
     private boolean daBiXoa;
 
+    public Tau(String maTau, String maChuyenTau) {
+        this.maTau = maTau;
+        this.maTuyenTau = maChuyenTau;
+        this.daBiXoa = false;
+    }
     // Getters and Setters
     public String getMaTau() {
         return maTau;

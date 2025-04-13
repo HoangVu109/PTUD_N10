@@ -1,7 +1,7 @@
-package iuh.form.ChuyenTau;
+package iuh.form.QuanLyForm.QuanLyChuyenTauForm;
 
-import iuh.controller.QuanLyController.QuanLyChuyenTauController;
-import iuh.dao.QuanLyDao.QuanLyChuyenTauDao;
+import iuh.controller.QuanLyCon.QuanLyChuyenTauController;
+import iuh.dao.QuanLyDAO.QuanLyChuyenTauDao;
 import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
 
 import javax.swing.*;

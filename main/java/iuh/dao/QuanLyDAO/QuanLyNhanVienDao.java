@@ -1,4 +1,4 @@
-package iuh.dao.QuanLyDao;
+package iuh.dao.QuanLyDAO;
 
 import iuh.connect.DatabaseConnection;
 
@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhanVienDao {
+public class QuanLyNhanVienDao {
 
     public List<String[]> getAllNhanVien() {
         List<String[]> nhanVienList = new ArrayList<>();

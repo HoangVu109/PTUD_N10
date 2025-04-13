@@ -1,4 +1,4 @@
-package iuh.dao.QuanLyDao;
+package iuh.dao.QuanLyDAO;
 
 import iuh.connect.DatabaseConnection;
 import iuh.model.ChuyenTau;

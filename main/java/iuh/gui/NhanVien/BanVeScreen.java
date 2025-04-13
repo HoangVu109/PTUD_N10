@@ -1,7 +1,9 @@
 package iuh.gui.NhanVien;
 
 import com.toedter.calendar.JDateChooser;
-//import iuh.controller.BanVeController;
+import iuh.controller.BanVeController;
+import iuh.form.NhanVienForm.NhapThongTinKhachHangForm;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class BanVeScreen extends JPanel {
     private JTable danhSachChoDatTable, gioVeTable;
     private DefaultTableModel danhSachChoDatModel, gioVeModel;
     private JPanel viTriPanel;
-//    private BanVeController controller;
+    private BanVeController controller;
 
     public BanVeScreen() {
         setLayout(new BorderLayout());
@@ -30,7 +32,7 @@ public class BanVeScreen extends JPanel {
         add(listPanel, BorderLayout.CENTER);
 
         // Khởi tạo controller
-//        controller = new BanVeController(this);
+        controller = new BanVeController(this);
     }
 
     private JPanel createMainInforPanel() {
@@ -100,6 +102,7 @@ public class BanVeScreen extends JPanel {
         huyButton.setBackground(new Color(255, 102, 102));
         huyButton.setForeground(Color.WHITE);
         huyButton.setFocusPainted(false);
+        huyButton.addActionListener(e -> resetTuyenTauVaNgayGio()); // Thêm sự kiện cho nút Hủy
         toolsPanel.add(huyButton);
 
         mainInforPanel.add(toolsPanel);
@@ -165,19 +168,20 @@ public class BanVeScreen extends JPanel {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.setColor(Color.BLACK);
-                g.drawLine(10, 5, getWidth() - 10, 5);
+                g.fillRect(0, 0, getWidth(), 1); // Vẽ đường thẳng ngang
             }
         };
         linePanel.setPreferredSize(new Dimension(0, 10));
         linePanel.setBackground(Color.WHITE);
         danhSachChuyenTauPanel.add(linePanel, BorderLayout.CENTER);
 
-        // Danh sách icon tàu (dùng JList với thanh cuộn ngang)
         chuyenTauList = new JList<>();
         chuyenTauList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         chuyenTauList.setVisibleRowCount(1);
-        chuyenTauList.setCellRenderer(new TrainIconRenderer());
+        chuyenTauList.setCellRenderer(new createTrainIcon());
         chuyenTauList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        chuyenTauList.setSelectionBackground(Color.WHITE); // Remove selection background
+        chuyenTauList.setSelectionForeground(Color.BLACK); // Keep text color normal when selected
         JScrollPane scrollPane = new JScrollPane(chuyenTauList);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
@@ -331,6 +335,11 @@ public class BanVeScreen extends JPanel {
         muaVeButton.setBackground(new Color(0, 120, 215));
         muaVeButton.setForeground(Color.WHITE);
         muaVeButton.setFocusPainted(false);
+        //add mua ve khi click nhay vao nhapThongTinKhachHangForm
+        muaVeButton.addActionListener(e -> {
+            NhapThongTinKhachHangForm nhapThongTinKhachHangForm = new NhapThongTinKhachHangForm();
+            nhapThongTinKhachHangForm.setVisible(true);
+        });
         buttonPanel.add(muaVeButton);
 
         JButton huyVeButton = new JButton("Hủy vé");
@@ -351,23 +360,24 @@ public class BanVeScreen extends JPanel {
     }
 
     // Renderer tùy chỉnh để hiển thị icon tàu trong JList
-    private class TrainIconRenderer extends DefaultListCellRenderer {
+    // Renderer tùy chỉnh để hiển thị icon tàu với mã chuyến tàu bên dưới
+    private class createTrainIcon extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            label.setIcon(new ImageIcon("src/main/java/iuh/icons/train.png"));
-            label.setHorizontalTextPosition(JLabel.CENTER);
-            label.setVerticalTextPosition(JLabel.BOTTOM);
-            label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-            label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            if (isSelected) {
-                label.setBackground(new Color(30, 144, 255));
-                label.setForeground(Color.WHITE);
-            } else {
-                label.setBackground(Color.WHITE);
-                label.setForeground(Color.BLACK);
-            }
-            return label;
+            JLabel maTauIcon = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            // Đặt icon tàu
+            maTauIcon.setIcon(new ImageIcon("src/main/java/iuh/icons/quanlychuyentau.png"));
+
+            // Đặt mã chuyến tàu bên dưới icon
+            maTauIcon.setText(value.toString());
+            maTauIcon.setHorizontalTextPosition(JLabel.CENTER);
+            maTauIcon.setVerticalTextPosition(JLabel.BOTTOM);   // Đặt text bên dưới icon
+            maTauIcon.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            maTauIcon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+
+            return maTauIcon;
         }
     }
 
@@ -394,6 +404,12 @@ public class BanVeScreen extends JPanel {
 
     public JPanel getViTriPanel() {
         return viTriPanel;
+    }
+    // Reset tuyến tàu, ngày giờ và danh sách chuyến tàu
+    public void resetTuyenTauVaNgayGio() {
+        tuyenTauComboBox.setSelectedIndex(0);
+        ngayDiChooser.setDate(null);
+        chuyenTauList.setModel(new DefaultListModel<>());
     }
 
     // Main để chạy thử

@@ -1,6 +1,6 @@
-package iuh.controller.QuanLyController;
+package iuh.controller.QuanLyCon;
 
-import iuh.dao.QuanLyDao.QuanLyChuyenTauDao;
+import iuh.dao.QuanLyDAO.QuanLyChuyenTauDao;
 import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
 import iuh.model.ChuyenTau;
 

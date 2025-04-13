@@ -1,9 +1,9 @@
 package iuh.gui.QuanLy;
 
-import iuh.controller.QuanLyController.QuanLyChuyenTauController;
-import iuh.form.ChuyenTau.SuaChuyenTauForm;
-import iuh.form.ChuyenTau.ThemChuyenTauForm;
-import iuh.form.ChuyenTau.XoaChuyenTauForm;
+import iuh.controller.QuanLyCon.QuanLyChuyenTauController;
+import iuh.form.QuanLyForm.QuanLyChuyenTauForm.SuaChuyenTauForm;
+import iuh.form.QuanLyForm.QuanLyChuyenTauForm.ThemChuyenTauForm;
+import iuh.form.QuanLyForm.QuanLyChuyenTauForm.XoaChuyenTauForm;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

@@ -1,5 +1,7 @@
 package iuh.main;
 import iuh.connect.DatabaseConnection;
+import iuh.gui.NhanVien.BanVeScreen;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +12,10 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
 public class NhanVienGUI extends JFrame {
     private JPanel mainArea; // Lưu trữ mainArea để cập nhật nội dung
+
 
     public NhanVienGUI() throws SQLException {
         // Kiểm tra kết nối cơ sở dữ liệu
@@ -21,30 +25,37 @@ public class NhanVienGUI extends JFrame {
             System.exit(1); // Thoát nếu không kết nối được
         }
 
+
         // Thiết lập cửa sổ chính
         setTitle("GA SÀI GÒN - HỆ THỐNG BÁN VÉ NHÂN VIÊN");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 750);
+//        setSize(1200, 750);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        // Tạo layout chính với BorderLayout
+
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(245, 245, 245)); // Màu xám nhạt #F5F5F5
+
 
         // Phần Menu Bên Trái
         JPanel menuPanel = createMenuPanel();
         mainPanel.add(menuPanel, BorderLayout.WEST);
 
+
         // Phần Khu Vực Chính (bao gồm thanh taskbar và khu vực trống)
         mainArea = createMainArea();
         mainPanel.add(mainArea, BorderLayout.CENTER);
 
+
         // Thêm mainPanel vào frame
         add(mainPanel);
+
 
         // Hiển thị cửa sổ
         setLocationRelativeTo(null); // Căn giữa màn hình
         setVisible(true);
     }
+
 
     // Tạo Menu Bên Trái
     private JPanel createMenuPanel() {
@@ -53,6 +64,7 @@ public class NhanVienGUI extends JFrame {
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setPreferredSize(new Dimension(200, 0));
         menuPanel.setBackground(new Color(46, 58, 89)); // Màu xanh đậm #2E3A59
+
 
         // Logo "Ga Sài Gòn"
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -63,8 +75,10 @@ public class NhanVienGUI extends JFrame {
         logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa theo trục X
         menuPanel.add(logoPanel);
 
+
         // Thêm khoảng cách dọc
         menuPanel.add(Box.createVerticalStrut(10));
+
 
         // Danh sách các chức năng cho nhân viên
         String[] menuItems = {
@@ -82,6 +96,7 @@ public class NhanVienGUI extends JFrame {
                 "src/main/java/iuh/icons/Myacount.png" // Tài khoản
         };
 
+
         // Thêm các nút menu
         for (int i = 0; i < menuItems.length; i++) {
             JButton menuButton = createMenuButton(menuItems[i], iconPaths[i]);
@@ -90,8 +105,10 @@ public class NhanVienGUI extends JFrame {
             menuPanel.add(Box.createVerticalStrut(10)); // Thêm khoảng cách giữa các nút
         }
 
+
         return menuPanel;
     }
+
 
     // Tạo nút menu với biểu tượng và hiệu ứng hover
     private JButton createMenuButton(String text, String iconPath) {
@@ -105,16 +122,19 @@ public class NhanVienGUI extends JFrame {
         menuButton.setLayout(new BoxLayout(menuButton, BoxLayout.X_AXIS)); // Sử dụng BoxLayout theo trục X
         menuButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+
         ImageIcon icon = new ImageIcon(iconPath);
         JLabel iconLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         JLabel textLabel = new JLabel(text);
         textLabel.setForeground(new Color(93, 121, 177)); // Màu #5D79B1
         textLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
+
         menuButton.add(Box.createHorizontalStrut(10)); // Thêm khoảng cách bên trái
         menuButton.add(iconLabel);
         menuButton.add(Box.createHorizontalStrut(10)); // Thêm khoảng cách giữa icon và text
         menuButton.add(textLabel);
+
 
         // Hiệu ứng hover
         menuButton.addMouseListener(new MouseAdapter() {
@@ -123,11 +143,13 @@ public class NhanVienGUI extends JFrame {
                 menuButton.setBackground(new Color(255, 255, 255)); // Màu trắng khi hover
             }
 
+
             @Override
             public void mouseExited(MouseEvent e) {
                 menuButton.setBackground(new Color(46, 58, 89)); // Trở về màu gốc
             }
         });
+
 
         // Sự kiện nhấp chuột để mở màn hình mới
         menuButton.addActionListener(new ActionListener() {
@@ -136,7 +158,7 @@ public class NhanVienGUI extends JFrame {
                 if (text.equals("Trang chủ")) {
                     updateMainArea(createWelcomePanel());
                 } else if (text.equals("Bán vé")) {
-                    updateMainArea(new JPanel()); // Placeholder for ticket selling screen
+                    updateMainArea(new BanVeScreen());
                 } else if (text.equals("Tra cứu lịch tầu")) {
                     updateMainArea(new JPanel()); // Placeholder for train schedule search
                 } else if (text.equals("Tra cứu vé")) {
@@ -153,24 +175,30 @@ public class NhanVienGUI extends JFrame {
             }
         });
 
+
         return menuButton;
     }
+
 
     // Tạo Khu Vực Chính (bao gồm Taskbar và phần trống)
     private JPanel createMainArea() {
         mainArea = new JPanel(new BorderLayout());
         mainArea.setBackground(new Color(245, 245, 245)); // Màu xám nhạt #F5F5F5
 
+
         // Thanh Taskbar
         JPanel taskbar = createTaskbar();
         mainArea.add(taskbar, BorderLayout.NORTH);
+
 
         // Phần chào mừng ban đầu
         JPanel welcomePanel = createWelcomePanel();
         mainArea.add(welcomePanel, BorderLayout.CENTER);
 
+
         return mainArea;
     }
+
 
     // Tạo Thanh Taskbar
     private JPanel createTaskbar() {
@@ -180,18 +208,22 @@ public class NhanVienGUI extends JFrame {
         taskbar.setBackground(Color.WHITE);
         taskbar.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(173, 216, 230))); // Viền #ADD8E6
 
+
         // Ngày tháng (sẽ được cập nhật tự động)
         JLabel dateLabel = new JLabel();
         dateLabel.setFont(new Font("Arial", Font.BOLD, 20));
         dateLabel.setForeground(new Color(46, 58, 89)); // Màu xanh đậm #2E3A59
         updateDateTime(dateLabel); // Cập nhật lần đầu
 
+
         // Spacer để đẩy logo thông báo sang phải
         Component spacer = Box.createHorizontalGlue(); // Sử dụng glue để đẩy sang phải
+
 
         // Logo thông báo
         ImageIcon notificationIcon = new ImageIcon("src/main/java/iuh/icons/notification.png"); // Placeholder icon
         JLabel notificationLabel = new JLabel(new ImageIcon(notificationIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+
 
         // Thêm các thành phần vào taskbar
         taskbar.add(Box.createHorizontalStrut(10)); // Thêm khoảng cách bên trái
@@ -199,6 +231,7 @@ public class NhanVienGUI extends JFrame {
         taskbar.add(spacer);
         taskbar.add(notificationLabel);
         taskbar.add(Box.createHorizontalStrut(10)); // Thêm khoảng cách bên phải
+
 
         // Cập nhật ngày giờ tự động mỗi giây
         new Timer(1000, new ActionListener() {
@@ -208,8 +241,10 @@ public class NhanVienGUI extends JFrame {
             }
         }).start();
 
+
         return taskbar;
     }
+
 
     // Phương thức để cập nhật ngày giờ
     private void updateDateTime(JLabel label) {
@@ -218,19 +253,23 @@ public class NhanVienGUI extends JFrame {
         label.setText(dateTime);
     }
 
+
     // Tạo panel chào mừng
     private JPanel createWelcomePanel() {
         JPanel welcomePanel = new JPanel();
         welcomePanel.setBackground(new Color(245, 245, 245));
         welcomePanel.setLayout(new BorderLayout()); // Sử dụng BorderLayout để căn giữa
 
+
         JLabel welcomeLabel = new JLabel("Chào mừng NHÂN VIÊN A", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(new Color(46, 58, 89)); // Màu xanh đậm #2E3A59
         welcomePanel.add(welcomeLabel, BorderLayout.CENTER);
 
+
         return welcomePanel;
     }
+
 
     // Cập nhật khu vực chính khi nhấp vào nút menu
     private void updateMainArea(JPanel newScreen) {
@@ -242,7 +281,12 @@ public class NhanVienGUI extends JFrame {
         mainArea.repaint();
     }
 
-    public static void main(String[] args) throws SQLException {
-        new NhanVienGUI();
+    public static void main(String[] args) {
+        try {
+            new NhanVienGUI();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
+

@@ -1,7 +1,8 @@
-package iuh.form.ChuyenTau;
+package iuh.form.QuanLyForm.QuanLyChuyenTauForm;
 
-import iuh.dao.QuanLyDao.QuanLyChuyenTauDao;
+import iuh.dao.QuanLyDAO.QuanLyChuyenTauDao;
 import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
+import iuh.model.ChuyenTau;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ThemChuyenTauForm extends JFrame {
+public class SuaChuyenTauForm extends JFrame {
     private final JTextField maChuyenTauField;
     private final JComboBox<String> maTauComboBox;
     private final JComboBox<String> tuyenTauComboBox;
@@ -20,9 +21,11 @@ public class ThemChuyenTauForm extends JFrame {
     private final JComboBox<Integer> soLuongHKToiDaComboBox;
     private final QuanLyChuyenTauDao dao;
     private final QuanLyChuyenTauScreen parentScreen;
+    private final String maChuyenTau;
 
-    public ThemChuyenTauForm(QuanLyChuyenTauScreen parentScreen) {
+    public SuaChuyenTauForm(QuanLyChuyenTauScreen parentScreen, String maChuyenTau) {
         this.parentScreen = parentScreen;
+        this.maChuyenTau = maChuyenTau;
         this.dao = new QuanLyChuyenTauDao();
         this.maChuyenTauField = new JTextField(15);
         this.maTauComboBox = new JComboBox<>(loadMaTauList().toArray(new String[0]));
@@ -31,10 +34,11 @@ public class ThemChuyenTauForm extends JFrame {
         this.soLuongHKComboBox = new JComboBox<>(createSoLuongHKOptions());
         this.soLuongHKToiDaComboBox = new JComboBox<>(createSoLuongHKToiDaOptions());
         initializeUI();
+        loadChuyenTauData();
     }
 
     private void initializeUI() {
-        setTitle("Thêm chuyến tàu");
+        setTitle("Sửa chuyến tàu");
         setSize(450, 550);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -48,7 +52,7 @@ public class ThemChuyenTauForm extends JFrame {
 
         mainPanel.add(createTitleLabel());
         mainPanel.add(Box.createVerticalStrut(20));
-        mainPanel.add(createInputPanel("Mã chuyến tàu:", maChuyenTauField));
+        mainPanel.add(createInputPanel("Mã chuyến tàu:", configureMaChuyenTauField()));
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(createInputPanel("Mã tàu:", maTauComboBox));
         mainPanel.add(Box.createVerticalStrut(15));
@@ -67,7 +71,7 @@ public class ThemChuyenTauForm extends JFrame {
     }
 
     private JLabel createTitleLabel() {
-        JLabel titleLabel = new JLabel("Thêm thông tin chuyến tàu", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("Sửa thông tin chuyến tàu", JLabel.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         titleLabel.setForeground(new Color(30, 144, 255));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -91,6 +95,11 @@ public class ThemChuyenTauForm extends JFrame {
         return panel;
     }
 
+    private JTextField configureMaChuyenTauField() {
+        maChuyenTauField.setEditable(false);
+        return maChuyenTauField;
+    }
+
     private JDateChooser configureDateChooser() {
         gioKhoiHanhChooser.setDateFormatString("dd/MM/yyyy HH:mm");
         return gioKhoiHanhChooser;
@@ -105,7 +114,7 @@ public class ThemChuyenTauForm extends JFrame {
         confirmButton.setForeground(Color.WHITE);
         confirmButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         confirmButton.setPreferredSize(new Dimension(100, 35));
-        confirmButton.addActionListener(e -> addChuyenTau());
+        confirmButton.addActionListener(e -> updateChuyenTau());
 
         JButton cancelButton = new JButton("Hủy");
         cancelButton.setBackground(new Color(255, 102, 102));
@@ -153,41 +162,56 @@ public class ThemChuyenTauForm extends JFrame {
         }
     }
 
-    private void addChuyenTau() {
+    private void loadChuyenTauData() {
+        List<ChuyenTau> chuyenTauList = dao.getAllChuyenTau();
+        ChuyenTau chuyenTau = chuyenTauList.stream()
+                .filter(ct -> ct.getMaChuyenTau().equals(maChuyenTau))
+                .findFirst()
+                .orElse(null);
+
+        if (chuyenTau != null) {
+            maChuyenTauField.setText(chuyenTau.getMaChuyenTau());
+            maTauComboBox.setSelectedItem(chuyenTau.getMaTau());
+            gioKhoiHanhChooser.setDate(chuyenTau.getGioKhoiHanh());
+            soLuongHKToiDaComboBox.setSelectedItem(chuyenTau.getSoLuongHKToiDa());
+            soLuongHKComboBox.setSelectedItem(chuyenTau.getSoluongHK());
+            tuyenTauComboBox.setSelectedItem(chuyenTau.getTuyenTau());
+        } else {
+            showError("Không tìm thấy chuyến tàu với mã: " + maChuyenTau);
+            dispose();
+        }
+    }
+
+    private void updateChuyenTau() {
         try {
-            String maChuyenTau = maChuyenTauField.getText().trim();
             String maTau = (String) maTauComboBox.getSelectedItem();
             java.util.Date gioKhoiHanhUtil = gioKhoiHanhChooser.getDate();
             int soLuongHKToiDa = (Integer) soLuongHKToiDaComboBox.getSelectedItem();
             int soLuongHK = (Integer) soLuongHKComboBox.getSelectedItem();
             String tuyenTau = (String) tuyenTauComboBox.getSelectedItem();
 
-            if (!validateInput(maChuyenTau, maTau, gioKhoiHanhUtil, soLuongHK, soLuongHKToiDa, tuyenTau)) {
+            if (!validateInput(maTau, gioKhoiHanhUtil, soLuongHK, soLuongHKToiDa, tuyenTau)) {
                 return;
             }
 
             Timestamp gioKhoiHanh = new Timestamp(gioKhoiHanhUtil.getTime());
             boolean daBiHuy = false;
 
-            if (dao.addChuyenTau(maChuyenTau, maTau, gioKhoiHanh, daBiHuy, soLuongHKToiDa, soLuongHK)) {
-                JOptionPane.showMessageDialog(this, "Thêm chuyến tàu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            if (dao.updateChuyenTau(maChuyenTau, maTau, gioKhoiHanh, daBiHuy, soLuongHKToiDa, soLuongHK)) {
+                JOptionPane.showMessageDialog(this, "Cập nhật chuyến tàu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 parentScreen.getController().loadInitialData();
                 dispose();
             } else {
-                showError("Thêm chuyến tàu thất bại! Vui lòng kiểm tra lại thông tin.");
+                showError("Cập nhật chuyến tàu thất bại! Vui lòng kiểm tra lại thông tin.");
             }
         } catch (Exception e) {
             showError("Lỗi không xác định: " + e.getMessage());
         }
     }
 
-    private boolean validateInput(String maChuyenTau, String maTau, java.util.Date gioKhoiHanhUtil, int soLuongHK, int soLuongHKToiDa, String tuyenTau) {
-        if (maChuyenTau.isEmpty() || maTau == null || gioKhoiHanhUtil == null || tuyenTau == null) {
+    private boolean validateInput(String maTau, java.util.Date gioKhoiHanhUtil, int soLuongHK, int soLuongHKToiDa, String tuyenTau) {
+        if (maTau == null || gioKhoiHanhUtil == null || tuyenTau == null) {
             showError("Vui lòng điền đầy đủ thông tin!");
-            return false;
-        }
-        if (!maChuyenTau.matches("^CT\\d{4}$")) {
-            showError("Mã chuyến tàu phải bắt đầu bằng 'CT' và có 4 chữ số!");
             return false;
         }
         if (gioKhoiHanhUtil.before(Calendar.getInstance().getTime())) {

@@ -1,21 +1,21 @@
-package iuh.controller.QuanLyController;
+package iuh.controller.QuanLyCon;
 
-import iuh.dao.QuanLyDao.NhanVienDao;
+import iuh.dao.QuanLyDAO.QuanLyNhanVienDao;
 import iuh.gui.QuanLy.QuanLyNhanVienScreen;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhanVienController {
+public class QuanLyNhanVienController {
     private QuanLyNhanVienScreen view;
-    private NhanVienDao model;
+    private QuanLyNhanVienDao model;
     private String[][] fullData;
     private List<Integer> danhsachgoc;
 
-    public NhanVienController(QuanLyNhanVienScreen view) {
+    public QuanLyNhanVienController(QuanLyNhanVienScreen view) {
         this.view = view;
-        this.model = new NhanVienDao();
+        this.model = new QuanLyNhanVienDao();
         this.danhsachgoc = new ArrayList<>();
         loadInitialData();
     }

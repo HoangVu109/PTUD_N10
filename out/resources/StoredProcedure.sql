@@ -345,3 +345,9 @@ BEGIN
     WHERE maChuyenTau = @maChuyenTau
 END
 GO
+CREATE PROCEDURE sp_LayDanhSachTuyenTau
+AS
+BEGIN
+    SELECT * FROM TuyenTau WHERE daBiXoa = 0;
+END
+GO

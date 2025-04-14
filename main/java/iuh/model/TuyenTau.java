@@ -5,6 +5,13 @@ public class TuyenTau {
     private String gaKhoiHanh;
     private String gaKetThuc;
     private boolean daBiXoa;
+    public TuyenTau() {
+        this.maTuyenTau = "";
+        this.gaKhoiHanh = "";
+        this.gaKetThuc = "";
+        this.daBiXoa = false;
+    }
+    // Constructor có tham số
     public TuyenTau(String maTuyenTau, String gaKhoiHanh, String gaKetThuc) {
         this.maTuyenTau = maTuyenTau;
         this.gaKhoiHanh = gaKhoiHanh;

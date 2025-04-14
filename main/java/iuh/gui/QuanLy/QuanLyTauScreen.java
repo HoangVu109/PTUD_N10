@@ -1,6 +1,6 @@
 package iuh.gui.QuanLy;
 
-import iuh.controller.QuanLyController.QuanLyTauController;
+import iuh.controller.QuanLyCon.QuanLyTauController;
 import iuh.model.Tau;
 
 import javax.swing.*;
@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.SQLException;
 
 public class QuanLyTauScreen {
     private JPanel panel;
@@ -33,8 +34,12 @@ public class QuanLyTauScreen {
         panel.add(toolsPanel, BorderLayout.SOUTH);
 
         // Khởi tạo controller
-        controller = new QuanLyTauController(tableModel);
-        controller.updateTable();
+        try {
+            controller = new QuanLyTauController(tableModel);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(panel, "Lỗi khi kết nối đến database: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
     private JPanel createFindPanel() {
@@ -73,12 +78,22 @@ public class QuanLyTauScreen {
         searchButton.setFocusPainted(false);
         searchButton.addActionListener(e -> {
             String searchText = searchField.getText().trim().toLowerCase();
-            controller.searchTau(searchText);
+            try {
+                controller.searchTau(searchText);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(panel, "Lỗi khi tìm kiếm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
 
         searchField.addActionListener(e -> {
             String searchText = searchField.getText().trim().toLowerCase();
-            controller.searchTau(searchText);
+            try {
+                controller.searchTau(searchText);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(panel, "Lỗi khi tìm kiếm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
 
         findPanel.add(searchButton);
@@ -181,7 +196,12 @@ public class QuanLyTauScreen {
             if (selectedRow >= 0) {
                 int confirm = JOptionPane.showConfirmDialog(panel, "Bạn có chắc muốn xóa tàu này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    controller.deleteTau(selectedRow);
+                    try {
+                        controller.deleteTau(selectedRow);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(panel, "Lỗi khi xóa tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(panel, "Vui lòng chọn một tàu để xóa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
@@ -198,7 +218,12 @@ public class QuanLyTauScreen {
             if (selectedRow >= 0) {
                 int confirm = JOptionPane.showConfirmDialog(panel, "Bạn có chắc muốn khôi phục tàu này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    controller.restoreTau(selectedRow);
+                    try {
+                        controller.restoreTau(selectedRow);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(panel, "Lỗi khi khôi phục tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(panel, "Vui lòng chọn một tàu để khôi phục!", "Lỗi", JOptionPane.WARNING_MESSAGE);
@@ -273,8 +298,13 @@ public class QuanLyTauScreen {
             String maTau = maTauField.getText();
             String maTuyenTau = maTuyenTauField.getText();
             if (!maTau.isEmpty() && !maTuyenTau.isEmpty()) {
-                controller.addTau(maTau, maTuyenTau);
-                dialog.dispose();
+                try {
+                    controller.addTau(maTau, maTuyenTau);
+                    dialog.dispose();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Lỗi khi thêm tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             } else {
                 JOptionPane.showMessageDialog(dialog, "Vui lòng điền đầy đủ thông tin!", "Lỗi", JOptionPane.WARNING_MESSAGE);
             }
@@ -328,8 +358,8 @@ public class QuanLyTauScreen {
         gbc.weightx = 0.7;
         contentPanel.add(maTauField, gbc);
 
-        // Mã chuyến tàu
-        JLabel maTuyenTauLabel = new JLabel("Mã tuyến tàu:");
+        // Mã tuyến tàu
+        JLabel maTuyenTauLabel = new JLabel("Mã Tuyến tàu:");
         maTuyenTauLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -356,8 +386,13 @@ public class QuanLyTauScreen {
             String maTau = maTauField.getText();
             String maTuyenTau = maTuyenTauField.getText();
             if (!maTau.isEmpty() && !maTuyenTau.isEmpty()) {
-                controller.editTau(row, maTau, maTuyenTau);
-                dialog.dispose();
+                try {
+                    controller.editTau(row, maTau, maTuyenTau);
+                    dialog.dispose();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Lỗi khi sửa tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             } else {
                 JOptionPane.showMessageDialog(dialog, "Vui lòng điền đầy đủ thông tin!", "Lỗi", JOptionPane.WARNING_MESSAGE);
             }

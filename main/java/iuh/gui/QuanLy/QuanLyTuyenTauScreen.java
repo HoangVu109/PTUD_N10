@@ -1,6 +1,6 @@
 package iuh.gui.QuanLy;
 
-import iuh.controller.QuanLyController.QuanLyTuyenTauController;
+import iuh.controller.QuanLyCon.QuanLyTuyenTauController;
 import iuh.model.TuyenTau;
 
 import javax.swing.*;
@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.SQLException;
 
 public class QuanLyTuyenTauScreen {
     private JPanel panel;
@@ -33,8 +34,12 @@ public class QuanLyTuyenTauScreen {
         panel.add(toolsPanel, BorderLayout.SOUTH);
 
         // Khởi tạo controller
-        controller = new QuanLyTuyenTauController(tableModel);
-        controller.updateTable();
+        try {
+            controller = new QuanLyTuyenTauController(tableModel);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(panel, "Lỗi khi kết nối đến database: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
     private JPanel createFindPanel() {
@@ -73,12 +78,22 @@ public class QuanLyTuyenTauScreen {
         searchButton.setFocusPainted(false);
         searchButton.addActionListener(e -> {
             String searchText = searchField.getText().trim().toLowerCase();
-            controller.searchRoute(searchText);
+            try {
+                controller.searchRoute(searchText);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(panel, "Lỗi khi tìm kiếm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
 
         searchField.addActionListener(e -> {
             String searchText = searchField.getText().trim().toLowerCase();
-            controller.searchRoute(searchText);
+            try {
+                controller.searchRoute(searchText);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(panel, "Lỗi khi tìm kiếm: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
 
         findPanel.add(searchButton);
@@ -181,7 +196,12 @@ public class QuanLyTuyenTauScreen {
             if (selectedRow >= 0) {
                 int confirm = JOptionPane.showConfirmDialog(panel, "Bạn có chắc muốn xóa tuyến này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    controller.deleteRoute(selectedRow);
+                    try {
+                        controller.deleteRoute(selectedRow);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(panel, "Lỗi khi xóa tuyến tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(panel, "Vui lòng chọn một tuyến tàu để xóa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
@@ -198,7 +218,12 @@ public class QuanLyTuyenTauScreen {
             if (selectedRow >= 0) {
                 int confirm = JOptionPane.showConfirmDialog(panel, "Bạn có chắc muốn khôi phục tuyến này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    controller.restoreRoute(selectedRow);
+                    try {
+                        controller.restoreRoute(selectedRow);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(panel, "Lỗi khi khôi phục tuyến tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(panel, "Vui lòng chọn một tuyến tàu để khôi phục!", "Lỗi", JOptionPane.WARNING_MESSAGE);
@@ -222,30 +247,27 @@ public class QuanLyTuyenTauScreen {
         dialog.setSize(400, 250);
         dialog.setLocationRelativeTo(panel);
 
-        // Panel chính chứa các trường nhập liệu
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Khoảng cách giữa các thành phần
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Mã tuyến tàu
         JLabel maTuyenLabel = new JLabel("Mã tuyến tàu:");
         maTuyenLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0.3; // Tỷ lệ chiều rộng của nhãn
+        gbc.weightx = 0.3;
         gbc.anchor = GridBagConstraints.WEST;
         contentPanel.add(maTuyenLabel, gbc);
 
         JTextField maTuyenField = new JTextField();
         maTuyenField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridx = 1;
-        gbc.weightx = 0.7; // Tỷ lệ chiều rộng của text field
+        gbc.weightx = 0.7;
         contentPanel.add(maTuyenField, gbc);
 
-        // Ga khởi hành
         JLabel gaKhoiHanhLabel = new JLabel("Ga khởi hành:");
         gaKhoiHanhLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridx = 0;
@@ -259,7 +281,6 @@ public class QuanLyTuyenTauScreen {
         gbc.weightx = 0.7;
         contentPanel.add(gaKhoiHanhField, gbc);
 
-        // Ga kết thúc
         JLabel gaKetThucLabel = new JLabel("Ga kết thúc:");
         gaKetThucLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridx = 0;
@@ -273,7 +294,6 @@ public class QuanLyTuyenTauScreen {
         gbc.weightx = 0.7;
         contentPanel.add(gaKetThucField, gbc);
 
-        // Panel chứa các nút
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
@@ -282,14 +302,19 @@ public class QuanLyTuyenTauScreen {
         saveButton.setBackground(new Color(0, 120, 215));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFocusPainted(false);
-        saveButton.setPreferredSize(new Dimension(80, 30)); // Đặt kích thước cố định cho nút
+        saveButton.setPreferredSize(new Dimension(80, 30));
         saveButton.addActionListener(e -> {
             String maTuyen = maTuyenField.getText();
             String gaKhoiHanh = gaKhoiHanhField.getText();
             String gaKetThuc = gaKetThucField.getText();
             if (!maTuyen.isEmpty() && !gaKhoiHanh.isEmpty() && !gaKetThuc.isEmpty()) {
-                controller.addRoute(maTuyen, gaKhoiHanh, gaKetThuc);
-                dialog.dispose();
+                try {
+                    controller.addRoute(maTuyen, gaKhoiHanh, gaKetThuc);
+                    dialog.dispose();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Lỗi khi thêm tuyến tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             } else {
                 JOptionPane.showMessageDialog(dialog, "Vui lòng điền đầy đủ thông tin!", "Lỗi", JOptionPane.WARNING_MESSAGE);
             }
@@ -297,7 +322,7 @@ public class QuanLyTuyenTauScreen {
 
         JButton cancelButton = new JButton("Hủy");
         cancelButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        cancelButton.setPreferredSize(new Dimension(80, 30)); // Đặt kích thước cố định cho nút
+        cancelButton.setPreferredSize(new Dimension(80, 30));
         cancelButton.addActionListener(e -> dialog.dispose());
 
         buttonPanel.add(saveButton);
@@ -317,49 +342,77 @@ public class QuanLyTuyenTauScreen {
         }
         JDialog dialog = new JDialog((Frame) null, "Sửa tuyến tàu", true);
         dialog.setLayout(new BorderLayout());
-        dialog.setSize(400, 300);
+        dialog.setSize(400, 250);
         dialog.setLocationRelativeTo(panel);
 
-        JPanel contentPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel maTuyenLabel = new JLabel("Mã tuyến tàu:");
         maTuyenLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0.3;
+        gbc.anchor = GridBagConstraints.WEST;
+        contentPanel.add(maTuyenLabel, gbc);
+
         JTextField maTuyenField = new JTextField(route.getMaTuyenTau());
         maTuyenField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        gbc.weightx = 0.7;
+        contentPanel.add(maTuyenField, gbc);
 
         JLabel gaKhoiHanhLabel = new JLabel("Ga khởi hành:");
         gaKhoiHanhLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0.3;
+        contentPanel.add(gaKhoiHanhLabel, gbc);
+
         JTextField gaKhoiHanhField = new JTextField(route.getGaKhoiHanh());
         gaKhoiHanhField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        gbc.weightx = 0.7;
+        contentPanel.add(gaKhoiHanhField, gbc);
 
         JLabel gaKetThucLabel = new JLabel("Ga kết thúc:");
         gaKetThucLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 0.3;
+        contentPanel.add(gaKetThucLabel, gbc);
+
         JTextField gaKetThucField = new JTextField(route.getGaKetThuc());
         gaKetThucField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        gbc.weightx = 0.7;
+        contentPanel.add(gaKetThucField, gbc);
 
-        contentPanel.add(maTuyenLabel);
-        contentPanel.add(maTuyenField);
-        contentPanel.add(gaKhoiHanhLabel);
-        contentPanel.add(gaKhoiHanhField);
-        contentPanel.add(gaKetThucLabel);
-        contentPanel.add(gaKetThucField);
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
         JButton saveButton = new JButton("Lưu");
         saveButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         saveButton.setBackground(new Color(0, 120, 215));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFocusPainted(false);
+        saveButton.setPreferredSize(new Dimension(80, 30));
         saveButton.addActionListener(e -> {
             String maTuyen = maTuyenField.getText();
             String gaKhoiHanh = gaKhoiHanhField.getText();
             String gaKetThuc = gaKetThucField.getText();
             if (!maTuyen.isEmpty() && !gaKhoiHanh.isEmpty() && !gaKetThuc.isEmpty()) {
-                controller.editRoute(row, maTuyen, gaKhoiHanh, gaKetThuc);
-                dialog.dispose();
+                try {
+                    controller.editRoute(row, maTuyen, gaKhoiHanh, gaKetThuc);
+                    dialog.dispose();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Lỗi khi sửa tuyến tàu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             } else {
                 JOptionPane.showMessageDialog(dialog, "Vui lòng điền đầy đủ thông tin!", "Lỗi", JOptionPane.WARNING_MESSAGE);
             }
@@ -367,6 +420,7 @@ public class QuanLyTuyenTauScreen {
 
         JButton cancelButton = new JButton("Hủy");
         cancelButton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        cancelButton.setPreferredSize(new Dimension(80, 30));
         cancelButton.addActionListener(e -> dialog.dispose());
 
         buttonPanel.add(saveButton);

@@ -10,6 +10,11 @@ public class Tau {
         this.maTuyenTau = maChuyenTau;
         this.daBiXoa = false;
     }
+    public Tau() {
+        this.maTau = "";
+        this.maTuyenTau = "";
+        this.daBiXoa = false;
+    }
     // Getters and Setters
     public String getMaTau() {
         return maTau;

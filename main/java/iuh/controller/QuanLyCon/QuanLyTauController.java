@@ -1,25 +1,27 @@
-package iuh.controller.QuanLyController;
+package iuh.controller.QuanLyCon;
 
+import iuh.dao.QuanLyDAO.QuanLyTauDAO;
 import iuh.model.Tau;
 
 import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuanLyTauController {
     private List<Tau> tauList;
     private DefaultTableModel tableModel;
+    private QuanLyTauDAO dao;
 
-    public QuanLyTauController(DefaultTableModel tableModel) {
+    public QuanLyTauController(DefaultTableModel tableModel) throws SQLException {
         this.tableModel = tableModel;
         this.tauList = new ArrayList<>();
+        this.dao = new QuanLyTauDAO();
         loadInitialData();
     }
 
-    private void loadInitialData() {
-        tauList.add(new Tau("TAU001", "CT001"));
-        tauList.add(new Tau("TAU002", "CT002"));
-        tauList.get(1).setDaBiXoa(true); // Đánh dấu tàu TAU002 là đã xóa
+    private void loadInitialData() throws SQLException {
+        tauList = dao.layDanhSachTau(); // Chỉ load dữ liệu từ database
         updateTable();
     }
 
@@ -36,31 +38,37 @@ public class QuanLyTauController {
         }
     }
 
-    public void addTau(String maTau, String maTuyenTau) {
+    public void addTau(String maTau, String maTuyenTau) throws SQLException {
         Tau newTau = new Tau(maTau, maTuyenTau);
-        tauList.add(newTau);
+        dao.themTau(newTau); // Thêm vào database qua DAO
+        tauList.add(newTau); // Thêm vào danh sách trong bộ nhớ
         updateTable();
     }
 
-    public void editTau(int row, String maTau, String maTuyenTau) {
+    public void editTau(int row, String maTau, String maTuyenTau) throws SQLException {
         if (row >= 0 && row < tauList.size()) {
             Tau tau = tauList.get(row);
             tau.setMaTau(maTau);
             tau.setMaTuyenTau(maTuyenTau);
+            dao.suaTau(tau); // Cập nhật trong database qua DAO
             updateTable();
         }
     }
 
-    public void deleteTau(int row) {
+    public void deleteTau(int row) throws SQLException {
         if (row >= 0 && row < tauList.size()) {
-            tauList.get(row).setDaBiXoa(true);
+            Tau tau = tauList.get(row);
+            dao.xoaTau(tau.getMaTau()); // Xóa trong database qua DAO
+            tau.setDaBiXoa(true); // Cập nhật trong danh sách
             updateTable();
         }
     }
 
-    public void restoreTau(int row) {
+    public void restoreTau(int row) throws SQLException {
         if (row >= 0 && row < tauList.size()) {
-            tauList.get(row).setDaBiXoa(false);
+            Tau tau = tauList.get(row);
+            dao.khoiPhucTau(tau.getMaTau()); // Khôi phục trong database qua DAO
+            tau.setDaBiXoa(false); // Cập nhật trong danh sách
             updateTable();
         }
     }
@@ -72,19 +80,12 @@ public class QuanLyTauController {
         return null;
     }
 
-    public void searchTau(String keyword) {
-        tableModel.setRowCount(0);
-        int stt = 1;
-        for (Tau tau : tauList) {
-            if (tau.getMaTau().toLowerCase().contains(keyword) ||
-                    tau.getMaTuyenTau().toLowerCase().contains(keyword)) {
-                tableModel.addRow(new Object[]{
-                        stt++,
-                        tau.getMaTau(),
-                        tau.getMaTuyenTau(),
-                        tau.isDaBiXoa() ? "Đã xóa" : "Hoạt động"
-                });
-            }
+    public void searchTau(String keyword) throws SQLException {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            tauList = dao.layDanhSachTau(); // Nếu không có từ khóa, load lại toàn bộ
+        } else {
+            tauList = dao.timKiemTau(keyword.toLowerCase()); // Tìm kiếm qua DAO
         }
+        updateTable();
     }
 }

@@ -1,9 +1,9 @@
 package iuh.gui.QuanLy;
 
-import iuh.controller.QuanLyController.NhanVienController;
-import iuh.form.NhanVien.XoaNhanVienForm;
-import iuh.form.NhanVien.SuaNhanVienForm;
-import iuh.form.NhanVien.ThemNhanVienForm;
+import iuh.controller.QuanLyCon.QuanLyNhanVienController;
+import iuh.form.QuanLyForm.QuanLyNhanVienForm.XoaNhanVienForm;
+import iuh.form.QuanLyForm.QuanLyNhanVienForm.SuaNhanVienForm;
+import iuh.form.QuanLyForm.QuanLyNhanVienForm.ThemNhanVienForm;
 
 
 import javax.swing.*;
@@ -20,7 +20,7 @@ public class QuanLyNhanVienScreen {
     private JTextField maNVField, hoTenField, cccdField, ngaySinhField, diaChiField, tinhTrangField;
     private JComboBox<String> chucVuComboBox, gioiTinhComboBox;
     private DefaultTableModel tableModel;
-    private NhanVienController controller;
+    private QuanLyNhanVienController controller;
 
     public QuanLyNhanVienScreen() {
         String[] columnNames = {"Mã nhân viên", "Họ tên", "Chức vụ", "Giới tính"};
@@ -31,7 +31,7 @@ public class QuanLyNhanVienScreen {
             }
         };
 
-        controller = new NhanVienController(this);
+        controller = new QuanLyNhanVienController(this);
 
         panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(245, 248, 250));
@@ -415,7 +415,7 @@ public class QuanLyNhanVienScreen {
         return panel;
     }
 
-    public NhanVienController getController() {
+    public QuanLyNhanVienController getController() {
         return controller;
     }
 

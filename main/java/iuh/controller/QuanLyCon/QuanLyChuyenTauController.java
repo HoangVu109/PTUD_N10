@@ -1,6 +1,6 @@
-package iuh.controller.QuanLyController;
+package iuh.controller.QuanLyCon;
 
-import iuh.dao.QuanLyDao.QuanLyChuyenTauDao;
+import iuh.dao.QuanLyDAO.QuanLyChuyenTauDao;
 import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
 import iuh.model.ChuyenTau;
 
@@ -11,38 +11,36 @@ import java.util.List;
 public class QuanLyChuyenTauController {
     private final QuanLyChuyenTauScreen view;
     private final QuanLyChuyenTauDao dao;
+    private final SimpleDateFormat dateFormat;
 
     public QuanLyChuyenTauController(QuanLyChuyenTauScreen view) {
         this.view = view;
         this.dao = new QuanLyChuyenTauDao();
+        this.dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     }
 
-    // Tải dữ liệu ban đầu
     public void loadInitialData() {
         List<ChuyenTau> chuyenTauList = dao.getAllChuyenTau();
         updateTableData(chuyenTauList);
     }
 
-    // Cập nhật dữ liệu bảng
     public void updateTableData(List<ChuyenTau> chuyenTauList) {
         DefaultTableModel tableModel = view.getTableModel();
-        tableModel.setRowCount(0); // Xóa dữ liệu cũ
+        tableModel.setRowCount(0);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (ChuyenTau chuyenTau : chuyenTauList) {
             Object[] row = {
                     chuyenTau.getMaChuyenTau(),
                     chuyenTau.getMaTau(),
                     dateFormat.format(chuyenTau.getGioKhoiHanh()),
-//                    chuyenTau.getSoLuongToa(),
                     chuyenTau.getTuyenTau(),
-                    chuyenTau.getSoLuongHanhKhach()
+                    chuyenTau.getSoluongHK(),
+                    chuyenTau.getSoLuongHKToiDa()
             };
             tableModel.addRow(row);
         }
     }
 
-    // Tìm kiếm chuyến tàu
     public void search(String keyword) {
         List<ChuyenTau> chuyenTauList = dao.searchChuyenTau(keyword);
         updateTableData(chuyenTauList);

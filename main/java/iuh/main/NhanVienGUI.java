@@ -82,13 +82,12 @@ public class NhanVienGUI extends JFrame {
 
         // Danh sách các chức năng cho nhân viên
         String[] menuItems = {
-                "Trang chủ", "Bán vé", "Tra cứu lịch tầu", "Tra cứu vé",
+                "Trang chủ", "Bán vé", "Tra cứu ",
                 "Thống kê", "Nhắn ca", "Kết ca", "Tài khoản"
         };
         String[] iconPaths = {
                 "src/main/java/iuh/icons/home.png", // Trang chủ
                 "src/main/java/iuh/icons/tickets.png", // Bán vé
-                "src/main/java/iuh/icons/tracuulichtau.png", // Tra cứu lịch tầu
                 "src/main/java/iuh/icons/tracuubanve.png", // Tra cứu vé
                 "src/main/java/iuh/icons/thongke.png", // Thống kê
                 "src/main/java/iuh/icons/nhanca.png", // Nhắn ca
@@ -159,9 +158,7 @@ public class NhanVienGUI extends JFrame {
                     updateMainArea(createWelcomePanel());
                 } else if (text.equals("Bán vé")) {
                     updateMainArea(new BanVeScreen());
-                } else if (text.equals("Tra cứu lịch tầu")) {
-                    updateMainArea(new JPanel()); // Placeholder for train schedule search
-                } else if (text.equals("Tra cứu vé")) {
+                } else if (text.equals("Tra cứu")) {
                     updateMainArea(new JPanel()); // Placeholder for ticket search
                 } else if (text.equals("Thống kê")) {
                     updateMainArea(new JPanel()); // Placeholder for statistics

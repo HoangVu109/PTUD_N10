@@ -1,6 +1,7 @@
 package iuh.main;
 
 import iuh.connect.DatabaseConnection;
+
 import iuh.gui.QuanLy.*;
 
 import javax.swing.*;
@@ -147,8 +148,10 @@ public class QuanLyGUI extends JFrame {
                     updateMainArea(new TraCuuThongTinScreen().getPanel());
                 } else if (text.equals("Thống kê")) {
                     updateMainArea(new ThongKeScreen().getPanel());
-                } else if (text.equals("My account")) {
+                } else if (text.equals("Tài khoản")) {
+//                    updateMainArea(new MyAccountScreen().getPanel());
                     updateMainArea(new MyAccountScreen().getPanel());
+
                 }
             }
         });

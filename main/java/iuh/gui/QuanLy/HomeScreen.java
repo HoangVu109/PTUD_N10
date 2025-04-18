@@ -1,162 +1,194 @@
 package iuh.gui.QuanLy;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.event.*;
 
-public class HomeScreen {
-    private JPanel panel; // Panel chính để chứa giao diện
-    private String employeeName = "Nhân viên A"; // Tạm đặt tên cố định
+public class HomeScreen extends JPanel {
+    private JPanel rightPanel; // Để thay thế nội dung khi nhấn nút
 
     public HomeScreen() {
-        // Tạo panel chính với BoxLayout theo chiều dọc
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(240, 248, 255)); // Màu xanh nhạt nhẹ nhàng #F0F8FF
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding ngoài
+        // Thiết lập BorderLayout cho JPanel chính
+        setLayout(new BorderLayout());
+        setBackground(Color.WHITE);
 
-        // Bước 1: Thêm logo
-        JLabel logoLabel = new JLabel();
-        ImageIcon logoIcon = new ImageIcon("src/main/java/iuh/icons/logo.png"); // Đường dẫn logo
-        logoLabel.setIcon(new ImageIcon(logoIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa logo
-        panel.add(logoLabel);
-        panel.add(Box.createVerticalStrut(10)); // Khoảng cách giữa logo và tiêu đề
+        // 1. imgPanel
+        JPanel imgPanel = new JPanel();
+        imgPanel.setBackground(Color.WHITE);
+        imgPanel.setPreferredSize(new Dimension(0, 300)); // Chiều cao hợp lý để không vỡ hình
+        imgPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        imgPanel.setLayout(new BorderLayout());
 
-        // Bước 2: Thêm tiêu đề "Welcome back, Nhân viên A"
-        JLabel titleLabel = new JLabel("Welcome back, " + employeeName);
+        JLabel imageLabel = new JLabel();
+        ImageIcon trainImage = new ImageIcon(new ImageIcon("src/main/java/iuh/icons/img.png") // Thay bằng đường dẫn thực tế
+                .getImage().getScaledInstance(1350, 300, Image.SCALE_SMOOTH));
+        imageLabel.setIcon(trainImage);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        titleLabel.setFont(new Font("Arial", Font.PLAIN, 28)); // Font không in đậm
-        // Cho title màu phù hợp với giao diện thay vì màu đen
-        titleLabel.setForeground(new Color(46, 58, 89)); // Màu xanh đậm #2E3A59
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa
-        panel.add(titleLabel);
+        imgPanel.add(imageLabel, BorderLayout.CENTER);
 
-        // Thêm khoảng cách dọc sau tiêu đề
-        panel.add(Box.createVerticalStrut(20));
 
-        // Bước 3: Hàng 1 - 3 ô (Số vé bán/ngày, Doanh thu/ngày, Lịch trình)
-        JPanel row1 = new JPanel();
-        row1.setLayout(new BoxLayout(row1, BoxLayout.X_AXIS)); // Xếp ngang
-        row1.setBackground(new Color(240, 248, 255)); // Màu nền giống panel chính
-        row1.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa hàng
+        // 2. mainPanel
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Color.WHITE);
 
-        // Ô 1: Số vé bán/ngày
-        JPanel ticketPanel = createInfoPanel("Số vé bán/ngày", "90", "src/main/java/iuh/icons/ticket.png");
-        row1.add(ticketPanel);
-        row1.add(Box.createHorizontalStrut(20));
+        // leftPanel
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBackground(Color.WHITE);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setPreferredSize(new Dimension(300, 0));
+        leftPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK)); // Viền bên phải
 
-        // Ô 2: Doanh thu/ngày
-        JPanel revenuePanel = createInfoPanel("Doanh thu/ngày", "5,430,000 VND", "src/main/java/iuh/icons/revenue.png");
-        row1.add(revenuePanel);
-        row1.add(Box.createHorizontalStrut(20));
 
-        // Ô 3: Lịch trình
-        JPanel schedulePanel = createInfoPanel("Lịch trình", "", "src/main/java/iuh/icons/schedule.png");
-        row1.add(schedulePanel);
 
-        panel.add(row1); // Thêm hàng 1 vào panel chính
-        panel.add(Box.createVerticalStrut(20));
+        // introduceTitle
+        JLabel introduceTitle = new JLabel("Giới thiệu");
+        introduceTitle.setFont(new Font("Segoe UI", Font.BOLD, 25));
+        introduceTitle.setForeground(new Color(46, 58, 89)); // Màu xanh dương
+        introduceTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(introduceTitle);
+        leftPanel.add(Box.createVerticalStrut(10));
 
-        // Bước 4: Hàng 2 - 3 ô (Nhận ca, Kết ca, Chương trình khuyến mãi)
-        JPanel row2 = new JPanel();
-        row2.setLayout(new BoxLayout(row2, BoxLayout.X_AXIS)); // Xếp ngang
-        row2.setBackground(new Color(240, 248, 255)); // Màu nền giống panel chính
-        row2.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa hàng
 
-        // Ô 1: Nhận ca
-        JPanel shiftMessagePanel = createInfoPanel("Nhận ca", "", null);
-        row2.add(shiftMessagePanel);
-        row2.add(Box.createHorizontalStrut(20));
+        // Các trường thông tin
+        leftPanel.add(createInfoRow(" Tên nhà ga:", "GA SÀI GÒN"));
+        leftPanel.add(Box.createVerticalStrut(25));
+        leftPanel.add(createInfoRow(" Địa chỉ:", "Gò Vấp, HCM"));
+        leftPanel.add(Box.createVerticalStrut(25));
+        leftPanel.add(createInfoRow(" Email:", "gasaigon@gmail.com  "));
+        leftPanel.add(Box.createVerticalStrut(25));
+        leftPanel.add(createInfoRow(" Hotline:", "038999520"));
+        leftPanel.add(Box.createVerticalStrut(25));
+        leftPanel.add(createInfoRow(" Ngày lập:", "12/2/2024"));
+        leftPanel.add(Box.createVerticalGlue());
+        // day tat ca cac truong thong tin sang phai
 
-        // Ô 2: Kết ca
-        JPanel shiftEndPanel = createInfoPanel("Kết ca", "", null);
-        row2.add(shiftEndPanel);
-        row2.add(Box.createHorizontalStrut(20));
 
-        // Ô 3: Chương trình khuyến mãi
-        JPanel promotionPanel = createInfoPanel("Chương trình khuyến mãi", "", null);
-        row2.add(promotionPanel);
 
-        panel.add(row2); // Thêm hàng 2 vào panel chính
-        panel.add(Box.createVerticalStrut(20));
+        // rightPanel
+        rightPanel = new JPanel();
+        rightPanel.setBackground(Color.WHITE);
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        // pageTitle
+        JLabel pageTitle = new JLabel("Trang chủ");
+        pageTitle.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        pageTitle.setForeground(new Color(46, 58, 89));
+        pageTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rightPanel.add(pageTitle);
+        rightPanel.add(Box.createVerticalStrut(5));
 
-        // Bước 5: Hàng 3 - Hình ảnh tàu
-        JLabel trainImageLabel = new JLabel();
-        ImageIcon trainIcon = new ImageIcon("src/main/java/iuh/icons/Doantau.png"); // Đường dẫn ảnh tàu
-        trainImageLabel.setIcon(new ImageIcon(trainIcon.getImage().getScaledInstance(700, 200, Image.SCALE_SMOOTH)));
-        trainImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa ảnh
-        trainImageLabel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(0, 102, 204), 2),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10))); // Viền xanh và padding
-        panel.add(trainImageLabel);
+        // subtitle
+        JLabel subtitle = new JLabel("Welcome back nhân viên A");
+        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rightPanel.add(subtitle);
+        rightPanel.add(Box.createVerticalStrut(20));
+
+        // Các nút
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        buttonPanel.setBackground(Color.WHITE);
+
+        JButton tinhTrangButton = new JButton("Tình trạng");
+        tinhTrangButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tinhTrangButton.setPreferredSize(new Dimension(150, 150));
+        tinhTrangButton.addActionListener(e -> switchToPanel(createTinhTrangPanel()));
+
+        JButton doanhThuButton = new JButton("Doanh thu");
+        doanhThuButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        doanhThuButton.setPreferredSize(new Dimension(150, 150));
+        doanhThuButton.addActionListener(e -> switchToPanel(createDoanhThuPanel()));
+
+        JButton lichTrinhButton = new JButton("Lịch trình");
+        lichTrinhButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lichTrinhButton.setPreferredSize(new Dimension(150, 150));
+        lichTrinhButton.addActionListener(e -> switchToPanel(createLichTrinhPanel()));
+
+        buttonPanel.add(tinhTrangButton);
+        buttonPanel.add(doanhThuButton);
+        buttonPanel.add(lichTrinhButton);
+
+        rightPanel.add(buttonPanel);
+        rightPanel.add(Box.createVerticalGlue());
+
+        mainPanel.add(leftPanel, BorderLayout.WEST);
+        mainPanel.add(rightPanel, BorderLayout.CENTER);
+
+        // Thêm các panel vào JPanel chính
+        add(imgPanel, BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
     }
 
-    // Hàm tạo một ô thông tin (như Số vé bán/ngày, Doanh thu/ngày, v.v.)
-    private JPanel createInfoPanel(String title, String value, String iconPath) {
-        // Tạo một JPanel tùy chỉnh
-        JPanel infoPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fill(new RoundRectangle2D.Float(10, 10, getWidth() - 20, getHeight() - 20, 15, 15)); // Bo tròn với bán kính 15
-                g2.setColor(new Color(0, 0, 0, 50)); // Màu bóng mờ
-                g2.fill(new RoundRectangle2D.Float(15, 15, getWidth() - 30, getHeight() - 30, 15, 15)); // Bóng mờ
-                g2.dispose();
-            }
-        };
-        infoPanel.setOpaque(false); // Làm nền trong suốt để thấy hiệu ứng
-        infoPanel.setBackground(new Color(230, 240, 255)); // Màu xanh nhạt #E6F0FF
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS)); // Xếp dọc bên trong ô
-        infoPanel.setPreferredSize(new Dimension(200, 120)); // Kích thước ô
-        infoPanel.setMaximumSize(new Dimension(200, 120)); // Giới hạn kích thước
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15)); // Padding trong ô
+    // Hàm tạo hàng thông tin cho leftPanel
+    private JPanel createInfoRow(String labelText, String textFieldText) {
+        JPanel rowPanel = new JPanel();
+        rowPanel.setBackground(Color.WHITE);
+        rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
+        rowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
-        // Thêm biểu tượng
-        if (iconPath != null) {
-            ImageIcon icon = new ImageIcon(iconPath);
-            JLabel iconLabel = new JLabel(new ImageIcon(icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
-            iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa
-            infoPanel.add(iconLabel);
-            infoPanel.add(Box.createVerticalStrut(5));
-        }
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(100, 30));
+        label.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-        // Thêm giá trị
-        if (!value.isEmpty()) {
-            JLabel valueLabel = new JLabel(value);
-            valueLabel.setFont(new Font("Arial", Font.PLAIN, 18)); // Font không in đậm
-            valueLabel.setForeground(Color.BLACK); // Màu đen
-            valueLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa
-            infoPanel.add(valueLabel);
-            infoPanel.add(Box.createVerticalStrut(5));
-        }
+        JTextField textField = new JTextField(textFieldText);
+        textField.setPreferredSize(new Dimension(150, 30));
+        textField.setMaximumSize(new Dimension(150, 30));
+        textField.setEditable(false); // Không cho chỉnh sửa
 
-        // Thêm tiêu đề
-        JLabel titleLabel = new JLabel(title);
-        titleLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // Font không in đậm
-        titleLabel.setForeground(Color.DARK_GRAY); // Màu xám đậm
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Căn giữa
-        infoPanel.add(titleLabel);
+        rowPanel.add(label);
+        rowPanel.add(Box.createHorizontalStrut(10));
+        rowPanel.add(textField);
+        rowPanel.add(Box.createHorizontalGlue());
 
-        return infoPanel;
+        return rowPanel;
     }
 
-    // Hàm trả về panel để dùng trong GaSaiGonUI
-    public JPanel getPanel() {
+    // Hàm thay thế rightPanel bằng panel mới
+    private void switchToPanel(JPanel newPanel) {
+        Container parent = rightPanel.getParent();
+        parent.remove(rightPanel);
+        rightPanel = newPanel;
+        parent.add(rightPanel, BorderLayout.CENTER);
+        parent.revalidate();
+        parent.repaint();
+    }
+
+    // Các panel giả lập cho Tình trạng, Doanh thu, Lịch trình
+    private JPanel createTinhTrangPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        JLabel label = new JLabel("Đây là panel Tình trạng");
+        label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        panel.add(label);
         return panel;
     }
 
-    // Main để test
+    private JPanel createDoanhThuPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        JLabel label = new JLabel("Đây là panel Doanh thu");
+        label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        panel.add(label);
+        return panel;
+    }
+
+    private JPanel createLichTrinhPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        JLabel label = new JLabel("Đây là panel Lịch trình");
+        label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        panel.add(label);
+        return panel;
+    }
+    public JPanel getPanel() {
+        return this;
+    }
+
+    // Main để kiểm tra giao diện
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Home Screen");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(900, 600);
-            frame.add(new HomeScreen().getPanel());
-            frame.setLocationRelativeTo(null);
+            frame.setSize(800, 600);
+            frame.add(new HomeScreen());
             frame.setVisible(true);
         });
     }

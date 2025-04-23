@@ -1,7 +1,7 @@
 package iuh.form.QuanLyForm.QuanLyChuyenTauForm;
 
 import iuh.dao.QuanLyDAO.QuanLyChuyenTauDao;
-import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
+import iuh.screen.QuanLy.QuanLyChuyenTauScreen;
 import iuh.model.ChuyenTau;
 import com.toedter.calendar.JDateChooser;
 

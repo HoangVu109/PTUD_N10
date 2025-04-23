@@ -1,5 +1,4 @@
-package iuh.gui.QuanLy;
-import iuh.gui.QuanLy.FormSuaThongTinMyAccount;
+package iuh.screen.QuanLy;
 
 import javax.swing.*;
 import java.awt.*;

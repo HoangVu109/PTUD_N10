@@ -12,8 +12,7 @@ public class QuanLyChuyenTauDao {
 
     public List<ChuyenTau> getAllChuyenTau() {
         List<ChuyenTau> chuyenTauList = new ArrayList<>();
-        String procedureCall = "{call sp_LayDanhSachChuyenTau}";
-
+        String procedureCall = "{call sp_LayDanhTaSachTatCaChuyenTau}";
         try {
             Connection conn = DatabaseConnection.getConnection();
             try (CallableStatement cstmt = conn.prepareCall(procedureCall);
@@ -31,7 +30,7 @@ public class QuanLyChuyenTauDao {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Lỗi truy vấn sp_LayDanhSachChuyenTau: " + e.getMessage());
+            System.err.println("Lỗi truy vấn sp_LayDanhTaSachTatCaChuyenTau: " + e.getMessage());
             e.printStackTrace();
         }
         return chuyenTauList;

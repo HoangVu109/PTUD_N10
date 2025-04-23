@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="java1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/main/java/iuh/libs" />
+      <root url="jar://$PROJECT_DIR$/src/main/java/iuh/libs/jcalendar-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/java/iuh/libs/mssql-jdbc-12.6.1.jre8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src/main/java" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/src/main/java/iuh/libs" recursive="false" />
+  </library>
+</component>

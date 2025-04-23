@@ -2,7 +2,7 @@ package iuh.form.QuanLyForm.QuanLyNhanVienForm;
 
 import iuh.controller.QuanLyCon.QuanLyNhanVienController;
 import iuh.dao.QuanLyDAO.QuanLyNhanVienDao;
-import iuh.gui.QuanLy.QuanLyNhanVienScreen;
+import iuh.screen.QuanLy.QuanLyNhanVienScreen;
 
 import javax.swing.*;
 import java.awt.*;

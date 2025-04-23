@@ -1,7 +1,7 @@
 package iuh;
 
 import iuh.connect.DatabaseConnection;
-import iuh.main.QuanLyGUI;
+import iuh.gui.QuanLyGUI;
 
 import java.sql.SQLException;
 

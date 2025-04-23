@@ -1,4 +1,4 @@
-package iuh.gui.QuanLy;
+package iuh.screen.QuanLy;
 
 import iuh.controller.QuanLyCon.QuanLyChuyenTauController;
 import iuh.form.QuanLyForm.QuanLyChuyenTauForm.SuaChuyenTauForm;
@@ -23,7 +23,7 @@ public class QuanLyChuyenTauScreen {
 
     public QuanLyChuyenTauScreen() {
         tableModel = new DefaultTableModel(
-                new String[]{"Mã chuyến tàu", "Mã tàu", "Giờ khởi hành"},
+                new String[]{"STT", "Mã chuyến tàu", "Mã tàu", "Giờ khởi hành", "Trạng thái"},
                 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -65,7 +65,7 @@ public class QuanLyChuyenTauScreen {
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         titlePanel.setBackground(new Color(240, 243, 246));
         JLabel titleLabel = new JLabel("Quản lý chuyến tàu");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
         titleLabel.setForeground(new Color(25, 118, 210));
         titlePanel.add(titleLabel);
         return titlePanel;
@@ -130,6 +130,11 @@ public class QuanLyChuyenTauScreen {
                 searchLabel.setBackground(Color.WHITE);
             }
         });
+        // add enter cho searchField
+        searchField.addActionListener(e -> {
+            String searchText = searchField.getText().trim().toLowerCase();
+            controller.search(searchText);
+        });
         return searchLabel;
     }
 
@@ -144,7 +149,7 @@ public class QuanLyChuyenTauScreen {
         editButton.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow >= 0) {
-                String maChuyenTau = (String) tableModel.getValueAt(selectedRow, 0);
+                String maChuyenTau = (String) tableModel.getValueAt(selectedRow, 1); // Index 1 for maChuyenTau due to STT
                 new SuaChuyenTauForm(this, maChuyenTau).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Hãy chọn một chuyến tàu để sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -218,9 +223,12 @@ public class QuanLyChuyenTauScreen {
         table.getTableHeader().setForeground(Color.WHITE);
         table.setBackground(Color.WHITE);
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);
-        table.getColumnModel().getColumn(2).setPreferredWidth(150);
+        // Adjust column widths
+        table.getColumnModel().getColumn(0).setPreferredWidth(50); // STT
+        table.getColumnModel().getColumn(1).setPreferredWidth(100); // Mã chuyến tàu
+        table.getColumnModel().getColumn(2).setPreferredWidth(80); // Mã tàu
+        table.getColumnModel().getColumn(3).setPreferredWidth(150); // Giờ khởi hành
+        table.getColumnModel().getColumn(4).setPreferredWidth(100); // Trạng thái
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);

@@ -1,4 +1,4 @@
-package iuh.gui.QuanLy;
+package iuh.screen.QuanLy;
 
 import iuh.controller.QuanLyCon.QuanLyNhanVienController;
 import iuh.form.QuanLyForm.QuanLyNhanVienForm.XoaNhanVienForm;

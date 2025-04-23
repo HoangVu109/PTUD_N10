@@ -1,15 +1,15 @@
-package iuh.gui.QuanLy;
+package iuh.screen.QuanLy;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TraCuuThongTinScreen {
+public class QuanLyKhachHangScreen {
     private JPanel panel;
 
-    public TraCuuThongTinScreen() {
+    public QuanLyKhachHangScreen() {
         panel = new JPanel();
         panel.setBackground(new Color(245, 245, 245));
-        JLabel label = new JLabel("Màn hình Tra cứu thông tin");
+        JLabel label = new JLabel("Màn hình Quản lý khách hàng");
         label.setFont(new Font("Arial", Font.BOLD, 20));
         panel.add(label);
     }

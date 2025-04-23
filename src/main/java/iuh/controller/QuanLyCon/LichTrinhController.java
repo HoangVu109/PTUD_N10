@@ -1,26 +1,27 @@
 package iuh.controller.QuanLyCon;
 
-import iuh.dao.QuanLyDAO.QuanLyChuyenTauDao;
-import iuh.screen.QuanLy.QuanLyChuyenTauScreen;
+import iuh.dao.QuanLyDAO.LichTrinhDao;
 import iuh.model.ChuyenTau;
+import iuh.screen.jpanel.LichTrinhPanel;
 
 import javax.swing.table.DefaultTableModel;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class QuanLyChuyenTauController {
-    private final QuanLyChuyenTauScreen view;
-    private final QuanLyChuyenTauDao dao;
+public class LichTrinhController {
+    private final LichTrinhPanel view;
+    private final LichTrinhDao dao;
     private final DateTimeFormatter dateFormatter;
 
-    public QuanLyChuyenTauController(QuanLyChuyenTauScreen view) {
+    public LichTrinhController(LichTrinhPanel view) {
         this.view = view;
-        this.dao = new QuanLyChuyenTauDao();
+        this.dao = new LichTrinhDao();
         this.dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     }
 
+
     public void loadInitialData() {
-        List<ChuyenTau> chuyenTauList = dao.getAllChuyenTau();
+        List<ChuyenTau> chuyenTauList = dao.getActiveChuyenTau();
         updateTableData(chuyenTauList);
     }
 
@@ -34,15 +35,16 @@ public class QuanLyChuyenTauController {
                     stt++, // Incremental STT
                     chuyenTau.getMaChuyenTau(),
                     chuyenTau.getTau().getMaTau(),
-                    chuyenTau.getGioKhoiHanh().format(dateFormatter),
-                    chuyenTau.isDaBiHuy() ? "Không hoạt động" : "Hoạt động" // Trạng thái based on daBiHuy
+                    chuyenTau.getTau().getTuyenTau().getGaKhoiHanh(),
+                    chuyenTau.getTau().getTuyenTau().getGaKetThuc(),
+                    chuyenTau.getGioKhoiHanh().format(dateFormatter)
             };
             tableModel.addRow(row);
         }
     }
 
     public void search(String keyword) {
-        List<ChuyenTau> chuyenTauList = dao.searchChuyenTau(keyword);
+        List<ChuyenTau> chuyenTauList = dao.searchActiveChuyenTau(keyword);
         updateTableData(chuyenTauList);
     }
 }

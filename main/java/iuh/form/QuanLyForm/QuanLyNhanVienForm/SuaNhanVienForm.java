@@ -49,24 +49,21 @@ public class SuaNhanVienForm extends JFrame {
         mainPanel.add(Box.createVerticalStrut(15));
         chucVuComboBox = new JComboBox<>(new String[]{"Quản lý", "Nhân viên"});
         chucVuComboBox.setPreferredSize(new Dimension(200, 30));
-        chucVuComboBox.setSelectedItem(chucVu);
+        chucVuComboBox.setSelectedItem(chucVu.equals("0") ? "Quản lý" : "Nhân viên");
         mainPanel.add(createInputPanel("Chức vụ:", chucVuComboBox));
         mainPanel.add(Box.createVerticalStrut(15));
         gioiTinhComboBox = new JComboBox<>(new String[]{"Nam", "Nữ"});
         gioiTinhComboBox.setPreferredSize(new Dimension(200, 30));
-        gioiTinhComboBox.setSelectedItem(gioiTinh);
+        gioiTinhComboBox.setSelectedItem(gioiTinh.equals("0") ? "Nam" : "Nữ");
         mainPanel.add(createInputPanel("Giới tính:", gioiTinhComboBox));
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(createInputPanel("Số CCCD:", cccdField = new JTextField(cccd, 15)));
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(createInputPanel("Số ĐT:", soDTField = new JTextField(soDT, 15)));
         mainPanel.add(Box.createVerticalStrut(15));
-        //set do dai cua textfield cua ngaysinh
 
         ngaySinhChooser = new JDateChooser();
-
-        ngaySinhChooser.setDateFormatString("dd/MM/yyyy");
-
+        ngaySinhChooser.setDateFormatString("yyyy-MM-dd");
         ngaySinhChooser.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

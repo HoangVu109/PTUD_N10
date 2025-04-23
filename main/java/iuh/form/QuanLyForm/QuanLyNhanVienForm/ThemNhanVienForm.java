@@ -59,10 +59,8 @@ public class ThemNhanVienForm extends JFrame {
         mainPanel.add(Box.createVerticalStrut(15));
 
         ngaySinhChooser = new JDateChooser();
-        ngaySinhChooser.setDateFormatString("dd/MM/yyyy");
-
+        ngaySinhChooser.setDateFormatString("yyyy-MM-dd");
         ngaySinhChooser.setPreferredSize(new Dimension(200, 30));
-
         mainPanel.add(createInputPanel("Ngày sinh:", ngaySinhChooser));
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(createInputPanel("Địa chỉ:", diaChiField = new JTextField(15)));

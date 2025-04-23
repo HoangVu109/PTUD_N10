@@ -10,9 +10,7 @@ public class QuanLyNhanVienDao {
 
     public List<String[]> getAllNhanVien() {
         List<String[]> nhanVienList = new ArrayList<>();
-        // Lay nhan vien chi " Dang lam viec "
-
-        String sql = "{call sp_LayDanhSachNhanVienDangLamViec }";
+        String sql = "{call sp_LayDanhSachNhanVienDangLamViec}";
 
         try (Connection conn = DatabaseConnection.getConnection();
              CallableStatement stmt = conn.prepareCall(sql);
@@ -64,19 +62,19 @@ public class QuanLyNhanVienDao {
 
     public boolean updateNhanVien(String maNV, String cccd, String hoTen, Date ngaySinh, int gioiTinh,
                                   String soDT, String diaChi, int chucVu, String matKhau, boolean daNghiViec) {
-        String sql = "UPDATE NhanVien SET soCCCD = ?, hoTenNV = ?, ngaySinh = ?, gioiTinh = ?, soDT = ?, diaChi = ?, chucVu = ?, matKhau = ?, daNghiViec = ? WHERE maSoNV = ?";
+        String sql = "{call sp_CapNhatNhanVien(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, cccd);
-            stmt.setString(2, hoTen);
-            stmt.setDate(3, ngaySinh);
-            stmt.setInt(4, gioiTinh);
-            stmt.setString(5, soDT);
-            stmt.setString(6, diaChi);
-            stmt.setInt(7, chucVu);
-            stmt.setString(8, matKhau);
-            stmt.setBoolean(9, daNghiViec);
-            stmt.setString(10, maNV);
+             CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setString(1, maNV);
+            stmt.setString(2, cccd);
+            stmt.setString(3, hoTen);
+            stmt.setDate(4, ngaySinh);
+            stmt.setInt(5, gioiTinh);
+            stmt.setString(6, soDT);
+            stmt.setString(7, diaChi);
+            stmt.setInt(8, chucVu);
+            stmt.setString(9, matKhau);
+            stmt.setBoolean(10, daNghiViec);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Lỗi truy vấn updateNhanVien: " + e.getMessage());
@@ -86,9 +84,9 @@ public class QuanLyNhanVienDao {
     }
 
     public boolean deleteNhanVien(String maNV) {
-        String sql = "UPDATE NhanVien SET daNghiViec = 1  WHERE maSoNV = ?";
+        String sql = "{call sp_XoaNhanVien(?)}";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             CallableStatement stmt = conn.prepareCall(sql)) {
             stmt.setString(1, maNV);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {

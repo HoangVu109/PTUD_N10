@@ -1,24 +1,25 @@
 package iuh.model;
 
 public class TuyenTau {
+
     private String maTuyenTau;
     private String gaKhoiHanh;
     private String gaKetThuc;
     private boolean daBiXoa;
+
+    // Constructor rỗng
     public TuyenTau() {
-        this.maTuyenTau = "";
-        this.gaKhoiHanh = "";
-        this.gaKetThuc = "";
-        this.daBiXoa = false;
     }
-    // Constructor có tham số
-    public TuyenTau(String maTuyenTau, String gaKhoiHanh, String gaKetThuc) {
+
+    // Constructor đầy đủ tham số
+    public TuyenTau(String maTuyenTau, String gaKhoiHanh, String gaKetThuc, boolean daBiXoa) {
         this.maTuyenTau = maTuyenTau;
         this.gaKhoiHanh = gaKhoiHanh;
         this.gaKetThuc = gaKetThuc;
-        this.daBiXoa = false;
+        this.daBiXoa = daBiXoa;
     }
-    // Getters and Setters
+
+    // Getter và Setter
     public String getMaTuyenTau() {
         return maTuyenTau;
     }
@@ -51,6 +52,7 @@ public class TuyenTau {
         this.daBiXoa = daBiXoa;
     }
 
+    // Phương thức toString
     @Override
     public String toString() {
         return "TuyenTau{" +

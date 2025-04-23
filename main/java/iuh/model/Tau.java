@@ -1,21 +1,23 @@
 package iuh.model;
 
 public class Tau {
+
     private String maTau;
-    private String maTuyenTau;
+    private TuyenTau tuyenTau;
     private boolean daBiXoa;
 
-    public Tau(String maTau, String maChuyenTau) {
-        this.maTau = maTau;
-        this.maTuyenTau = maChuyenTau;
-        this.daBiXoa = false;
-    }
+    // Constructor rỗng
     public Tau() {
-        this.maTau = "";
-        this.maTuyenTau = "";
-        this.daBiXoa = false;
     }
-    // Getters and Setters
+
+    // Constructor đầy đủ tham số
+    public Tau(String maTau, TuyenTau tuyenTau, boolean daBiXoa) {
+        this.maTau = maTau;
+        this.tuyenTau = tuyenTau;
+        this.daBiXoa = daBiXoa;
+    }
+
+    // Getter và Setter
     public String getMaTau() {
         return maTau;
     }
@@ -24,12 +26,12 @@ public class Tau {
         this.maTau = maTau;
     }
 
-    public String getMaTuyenTau() {
-        return maTuyenTau;
+    public TuyenTau getTuyenTau() {
+        return tuyenTau;
     }
 
-    public void setMaTuyenTau(String maTuyenTau) {
-        this.maTuyenTau = maTuyenTau;
+    public void setTuyenTau(TuyenTau tuyenTau) {
+        this.tuyenTau = tuyenTau;
     }
 
     public boolean isDaBiXoa() {
@@ -40,11 +42,12 @@ public class Tau {
         this.daBiXoa = daBiXoa;
     }
 
+    // Phương thức toString
     @Override
     public String toString() {
         return "Tau{" +
                 "maTau='" + maTau + '\'' +
-                ", maTuyenTau='" + maTuyenTau + '\'' +
+                ", tuyenTau=" + (tuyenTau != null ? tuyenTau.getMaTuyenTau() : "null") +
                 ", daBiXoa=" + daBiXoa +
                 '}';
     }

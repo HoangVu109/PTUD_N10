@@ -1,40 +1,54 @@
 package iuh.model;
 
 public class ToaTau {
-    private String maToaTau;
-    private String maTau;
-    private boolean daBiXoa;
-    // Getters and Setters
-    public String getMaToaTau() {
-        return maToaTau;
+
+    private ChuyenTau chuyenTau;
+    private int soToa;
+    private LoaiToaTau loaiToaTau;
+
+    // Constructor rỗng
+    public ToaTau() {
     }
 
-    public void setMaToaTau(String maToaTau) {
-        this.maToaTau = maToaTau;
+    // Constructor đầy đủ tham số
+    public ToaTau(ChuyenTau chuyenTau, int soToa, LoaiToaTau loaiToaTau) {
+        this.chuyenTau = chuyenTau;
+        this.soToa = soToa;
+        this.loaiToaTau = loaiToaTau;
     }
 
-    public String getMaTau() {
-        return maTau;
+    // Getter và Setter
+    public ChuyenTau getChuyenTau() {
+        return chuyenTau;
     }
 
-    public void setMaTau(String maTau) {
-        this.maTau = maTau;
+    public void setChuyenTau(ChuyenTau chuyenTau) {
+        this.chuyenTau = chuyenTau;
     }
 
-    public boolean isDaBiXoa() {
-        return daBiXoa;
+    public int getSoToa() {
+        return soToa;
     }
 
-    public void setDaBiXoa(boolean daBiXoa) {
-        this.daBiXoa = daBiXoa;
+    public void setSoToa(int soToa) {
+        this.soToa = soToa;
     }
 
+    public LoaiToaTau getLoaiToaTau() {
+        return loaiToaTau;
+    }
+
+    public void setLoaiToaTau(LoaiToaTau loaiToaTau) {
+        this.loaiToaTau = loaiToaTau;
+    }
+
+    // Phương thức toString
     @Override
     public String toString() {
         return "ToaTau{" +
-                "maToaTau='" + maToaTau + '\'' +
-                ", maTau='" + maTau + '\'' +
-                ", daBiXoa=" + daBiXoa +
+                "chuyenTau=" + (chuyenTau != null ? chuyenTau.getMaChuyenTau() : "null") +
+                ", soToa=" + soToa +
+                ", loaiToaTau=" + (loaiToaTau != null ? loaiToaTau.getMaLoaiToaTau() : "null") +
                 '}';
     }
 }

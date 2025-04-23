@@ -53,7 +53,7 @@ public class XoaNhanVienForm extends JFrame {
         messageLabel.setHorizontalAlignment(JLabel.CENTER);
         panel.add(messageLabel, BorderLayout.NORTH);
 
-        JLabel subMessageLabel = new JLabel("Dữ liệu sẽ bị xóa vĩnh viễn");
+        JLabel subMessageLabel = new JLabel("Nhân viên sẽ được đánh dấu đã nghỉ việc");
         subMessageLabel.setFont(new Font("Segoe UI", Font.ITALIC, 12));
         subMessageLabel.setForeground(new Color(255, 102, 102));
         subMessageLabel.setHorizontalAlignment(JLabel.CENTER);

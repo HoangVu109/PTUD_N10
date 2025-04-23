@@ -5,18 +5,18 @@ import iuh.gui.QuanLy.QuanLyChuyenTauScreen;
 import iuh.model.ChuyenTau;
 
 import javax.swing.table.DefaultTableModel;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class QuanLyChuyenTauController {
     private final QuanLyChuyenTauScreen view;
     private final QuanLyChuyenTauDao dao;
-    private final SimpleDateFormat dateFormat;
+    private final DateTimeFormatter dateFormatter;
 
     public QuanLyChuyenTauController(QuanLyChuyenTauScreen view) {
         this.view = view;
         this.dao = new QuanLyChuyenTauDao();
-        this.dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     }
 
     public void loadInitialData() {
@@ -31,11 +31,8 @@ public class QuanLyChuyenTauController {
         for (ChuyenTau chuyenTau : chuyenTauList) {
             Object[] row = {
                     chuyenTau.getMaChuyenTau(),
-                    chuyenTau.getMaTau(),
-                    dateFormat.format(chuyenTau.getGioKhoiHanh()),
-                    chuyenTau.getTuyenTau(),
-                    chuyenTau.getSoluongHK(),
-                    chuyenTau.getSoLuongHKToiDa()
+                    chuyenTau.getTau().getMaTau(),
+                    chuyenTau.getGioKhoiHanh().format(dateFormatter)
             };
             tableModel.addRow(row);
         }

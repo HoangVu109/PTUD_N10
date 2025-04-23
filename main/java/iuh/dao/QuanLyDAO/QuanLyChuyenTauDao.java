@@ -2,6 +2,7 @@ package iuh.dao.QuanLyDAO;
 
 import iuh.connect.DatabaseConnection;
 import iuh.model.ChuyenTau;
+import iuh.model.Tau;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,15 +22,11 @@ public class QuanLyChuyenTauDao {
                 while (rs.next()) {
                     ChuyenTau chuyenTau = new ChuyenTau();
                     chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
-                    chuyenTau.setMaTau(rs.getString("maTau"));
-                    chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh"));
+                    Tau tau = new Tau();
+                    tau.setMaTau(rs.getString("maTau"));
+                    chuyenTau.setTau(tau);
+                    chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh").toLocalDateTime());
                     chuyenTau.setDaBiHuy(rs.getBoolean("daBiHuy"));
-                    chuyenTau.setSoLuongHKToiDa(rs.getInt("soLuongHKToiDa"));
-                    chuyenTau.setSoluongHK(rs.getInt("soLuongHK"));
-
-                    String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
-                    chuyenTau.setTuyenTau(tuyenTau);
-
                     chuyenTauList.add(chuyenTau);
                 }
             }
@@ -40,18 +37,16 @@ public class QuanLyChuyenTauDao {
         return chuyenTauList;
     }
 
-    public boolean addChuyenTau(String maChuyenTau, String maTau, Timestamp gioKhoiHanh, boolean daBiHuy, int soLuongHKToiDa, int soLuongHK) {
-        String procedureCall = "{call sp_ThemChuyenTau(?, ?, ?, ?, ?, ?)}";
+    public boolean addChuyenTau(String maChuyenTau, String maTau, Timestamp gioKhoiHanh, boolean daBiHuy) {
+        String procedureCall = "{call sp_ThemChuyenTau(?, ?, ?, ?)}";
 
         try {
             Connection conn = DatabaseConnection.getConnection();
             try (CallableStatement cstmt = conn.prepareCall(procedureCall)) {
                 cstmt.setString(1, maChuyenTau);
                 cstmt.setString(2, maTau);
-                cstmt.setTimestamp(3, new Timestamp(gioKhoiHanh.getTime()));
+                cstmt.setTimestamp(3, gioKhoiHanh);
                 cstmt.setBoolean(4, daBiHuy);
-                cstmt.setInt(5, soLuongHKToiDa);
-                cstmt.setInt(6, soLuongHK);
 
                 int rowsAffected = cstmt.executeUpdate();
                 return rowsAffected > 0;
@@ -65,12 +60,11 @@ public class QuanLyChuyenTauDao {
 
     public List<ChuyenTau> searchChuyenTau(String keyword) {
         List<ChuyenTau> chuyenTauList = new ArrayList<>();
-        String query = "SELECT ct.maChuyenTau, ct.maTau, ct.gioKhoiHanh, t.maTuyenTau, tt.gaKhoiHanh, tt.gaKetThuc, " +
-                "ct.soLuongHKToiDa, ct.soLuongHK " +
+        String query = "SELECT ct.maChuyenTau, ct.maTau, ct.gioKhoiHanh, ct.daBiHuy " +
                 "FROM ChuyenTau ct " +
                 "JOIN Tau t ON ct.maTau = t.maTau " +
                 "JOIN TuyenTau tt ON t.maTuyenTau = tt.maTuyenTau " +
-                "WHERE ct.daBiHuy = 0 AND (ct.maChuyenTau LIKE ? OR ct.maTau LIKE ?)";
+                "WHERE ct.daBiHuy = 0 AND (ct.maChuyenTau LIKE ? OR ct.maTau LIKE ? OR tt.gaKhoiHanh LIKE ? OR tt.gaKetThuc LIKE ?)";
 
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -78,19 +72,18 @@ public class QuanLyChuyenTauDao {
                 String timkiem = "%" + keyword + "%";
                 pstmt.setString(1, timkiem);
                 pstmt.setString(2, timkiem);
+                pstmt.setString(3, timkiem);
+                pstmt.setString(4, timkiem);
 
                 try (ResultSet rs = pstmt.executeQuery()) {
                     while (rs.next()) {
                         ChuyenTau chuyenTau = new ChuyenTau();
                         chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
-                        chuyenTau.setMaTau(rs.getString("maTau"));
-                        chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh"));
-                        chuyenTau.setSoLuongHKToiDa(rs.getInt("soLuongHKToiDa"));
-                        chuyenTau.setSoluongHK(rs.getInt("soLuongHK"));
-
-                        String tuyenTau = rs.getString("gaKhoiHanh") + " - " + rs.getString("gaKetThuc");
-                        chuyenTau.setTuyenTau(tuyenTau);
-
+                        Tau tau = new Tau();
+                        tau.setMaTau(rs.getString("maTau"));
+                        chuyenTau.setTau(tau);
+                        chuyenTau.setGioKhoiHanh(rs.getTimestamp("gioKhoiHanh").toLocalDateTime());
+                        chuyenTau.setDaBiHuy(rs.getBoolean("daBiHuy"));
                         chuyenTauList.add(chuyenTau);
                     }
                 }
@@ -101,7 +94,7 @@ public class QuanLyChuyenTauDao {
         }
         return chuyenTauList;
     }
-    // phuong thuc lay danh sach tau
+
     public List<String> getMaTauList() {
         List<String> maTauList = new ArrayList<>();
         String query = "SELECT maTau FROM Tau WHERE daBiXoa = 0";
@@ -121,7 +114,6 @@ public class QuanLyChuyenTauDao {
         return maTauList;
     }
 
-    //  phương thức lấy danh sách tuyến tàu
     public List<String> getTuyenTauList() {
         List<String> tuyenTauList = new ArrayList<>();
         String query = "SELECT gaKhoiHanh, gaKetThuc FROM TuyenTau WHERE daBiXoa = 0";
@@ -141,8 +133,9 @@ public class QuanLyChuyenTauDao {
         }
         return tuyenTauList;
     }
-    public boolean updateChuyenTau(String maChuyenTau, String maTau, Timestamp gioKhoiHanh, boolean daBiHuy, int soLuongHKToiDa, int soLuongHK) {
-        String procedureCall = "{call sp_CapNhatChuyenTau(?, ?, ?, ?, ?, ?)}";
+
+    public boolean updateChuyenTau(String maChuyenTau, String maTau, Timestamp gioKhoiHanh, boolean daBiHuy) {
+        String procedureCall = "{call sp_CapNhatChuyenTau(?, ?, ?, ?)}";
 
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -151,8 +144,6 @@ public class QuanLyChuyenTauDao {
                 cstmt.setString(2, maTau);
                 cstmt.setTimestamp(3, gioKhoiHanh);
                 cstmt.setBoolean(4, daBiHuy);
-                cstmt.setInt(5, soLuongHKToiDa);
-                cstmt.setInt(6, soLuongHK);
 
                 int rowsAffected = cstmt.executeUpdate();
                 return rowsAffected > 0;
@@ -163,8 +154,9 @@ public class QuanLyChuyenTauDao {
             return false;
         }
     }
+
     public boolean deleteChuyenTau(String maChuyenTau) {
-        String query = "UPDATE ChuyenTau SET daBiHuy = 1 WHERE maChuyenTau = ?"; // xoa nhan vien khong xoa khoi data ma chuyen sang -1
+        String query = "UPDATE ChuyenTau SET daBiHuy = 1 WHERE maChuyenTau = ?";
 
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -179,5 +171,4 @@ public class QuanLyChuyenTauDao {
             return false;
         }
     }
-
 }

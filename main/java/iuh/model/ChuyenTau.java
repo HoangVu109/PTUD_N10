@@ -1,18 +1,27 @@
 package iuh.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ChuyenTau {
+
     private String maChuyenTau;
-    private String maTau;
-    private Timestamp gioKhoiHanh;
-    private String tuyenTau;
-    private boolean daBiHuy ;
-    private int soLuongHKToiDa;
-    private int soluongHK;
+    private Tau tau;
+    private LocalDateTime gioKhoiHanh;
+    private boolean daBiHuy;
 
+    // Constructor rỗng
+    public ChuyenTau() {
+    }
 
-    // Getters and Setters
+    // Constructor đầy đủ tham số
+    public ChuyenTau(String maChuyenTau, Tau tau, LocalDateTime gioKhoiHanh, boolean daBiHuy) {
+        this.maChuyenTau = maChuyenTau;
+        this.tau = tau;
+        this.gioKhoiHanh = gioKhoiHanh;
+        this.daBiHuy = daBiHuy;
+    }
+
+    // Getter và Setter
     public String getMaChuyenTau() {
         return maChuyenTau;
     }
@@ -21,47 +30,20 @@ public class ChuyenTau {
         this.maChuyenTau = maChuyenTau;
     }
 
-    public String getMaTau() {
-        return maTau;
+    public Tau getTau() {
+        return tau;
     }
 
-    public void setMaTau(String maTau) {
-        this.maTau = maTau;
+    public void setTau(Tau tau) {
+        this.tau = tau;
     }
 
-    public Timestamp getGioKhoiHanh() {
+    public LocalDateTime getGioKhoiHanh() {
         return gioKhoiHanh;
     }
 
-    public void setGioKhoiHanh(Timestamp gioKhoiHanh) {
+    public void setGioKhoiHanh(LocalDateTime gioKhoiHanh) {
         this.gioKhoiHanh = gioKhoiHanh;
-    }
-
-    public String getTuyenTau() {
-        return tuyenTau;
-    }
-
-    public void setTuyenTau(String tuyenTau) {
-        this.tuyenTau = tuyenTau;
-    }
-
-    public ChuyenTau() {
-    }
-
-    public int getSoluongHK() {
-        return soluongHK;
-    }
-
-    public void setSoluongHK(int soluonngHK) {
-        this.soluongHK = soluonngHK;
-    }
-
-    public int getSoLuongHKToiDa() {
-        return soLuongHKToiDa;
-    }
-
-    public void setSoLuongHKToiDa(int soLuongHKToiDa) {
-        this.soLuongHKToiDa = soLuongHKToiDa;
     }
 
     public boolean isDaBiHuy() {
@@ -72,16 +54,14 @@ public class ChuyenTau {
         this.daBiHuy = daBiHuy;
     }
 
+    // Phương thức toString
     @Override
     public String toString() {
         return "ChuyenTau{" +
                 "maChuyenTau='" + maChuyenTau + '\'' +
-                ", maTau='" + maTau + '\'' +
+                ", tau=" + (tau != null ? tau.getMaTau() : "null") +
                 ", gioKhoiHanh=" + gioKhoiHanh +
-                ", tuyenTau='" + tuyenTau + '\'' +
                 ", daBiHuy=" + daBiHuy +
-                ", soLuongHKToiDa=" + soLuongHKToiDa +
-                ", soluongHK=" + soluongHK +
                 '}';
     }
 }

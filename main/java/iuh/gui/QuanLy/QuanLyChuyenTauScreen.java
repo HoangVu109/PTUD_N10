@@ -23,7 +23,7 @@ public class QuanLyChuyenTauScreen {
 
     public QuanLyChuyenTauScreen() {
         tableModel = new DefaultTableModel(
-                new String[]{"Mã chuyến tàu", "Mã tàu", "Giờ khởi hành", "Tuyến tàu", "Số lượng hành khách", "Số lượng HK tối đa"},
+                new String[]{"Mã chuyến tàu", "Mã tàu", "Giờ khởi hành"},
                 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -221,9 +221,6 @@ public class QuanLyChuyenTauScreen {
         table.getColumnModel().getColumn(0).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setPreferredWidth(80);
         table.getColumnModel().getColumn(2).setPreferredWidth(150);
-        table.getColumnModel().getColumn(3).setPreferredWidth(150);
-        table.getColumnModel().getColumn(4).setPreferredWidth(120);
-        table.getColumnModel().getColumn(5).setPreferredWidth(120);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);

@@ -144,7 +144,7 @@ public class QuanLyGUI extends JFrame {
                 } else if (text.equals("Quản lý tàu")) {
 //                    updateMainArea(new QuanLyTauScreen().getPanel());
                 } else if (text.equals("Quản lý khách hàng")) {
-                    updateMainArea(new QuanLyKhachHangScreen().getPanel());
+                    updateMainArea(new QuanLyHanhKhachScreen().getPanel());
                 } else if (text.equals("Tra cứu thông tin")) {
                     updateMainArea(new TraCuuThongTinScreen().getPanel());
                 } else if (text.equals("Thống kê")) {
